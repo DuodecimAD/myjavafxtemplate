@@ -6,6 +6,8 @@ import com.myjavafxtemplate.myapp.java.utility.AppTree;
 import com.myjavafxtemplate.myapp.java.utility.LoggerUtil;
 
 import java.io.IOException;
+import java.net.URL;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -46,11 +48,12 @@ public class App extends Application {
     private void setPrimaryStage(Stage primaryStage) {
     	
     	try {
-	    	FXMLLoader loader = new FXMLLoader(getClass().getResource(AppPaths.INSTANCE.appPath+"java/views/"+mainFxml));
+    		URL pathUrl = new URL(AppPaths.INSTANCE.appUrlPath + mainFxml);
+	    	FXMLLoader loader = new FXMLLoader(pathUrl);
 			LoggerUtil.getLogger().info("initialize will be called now");
 			Parent root = loader.load();
 			LoggerUtil.getLogger().info("fxml loaded");
-			root.getStylesheets().add(AppPaths.INSTANCE.appPath+"ressources/css/styles.css");
+			root.getStylesheets().add(AppPaths.INSTANCE.cssPath+"styles.css");
 			LoggerUtil.getLogger().info("css loaded");
 			
 			primaryStage.setScene(new Scene(root));

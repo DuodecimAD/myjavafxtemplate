@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Label?>
 
@@ -13,6 +14,11 @@
     <center>
         <VBox id="content">
     		<Label text="My APP" />
+    		<Label text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eu quam egestas, dictum leo sit amet, suscipit ex. Phasellus enim elit, dapibus nec mollis non, hendrerit et magna. Suspendisse pharetra, orci vel elementum imperdiet, odio tellus pulvinar est, vel finibus augue arcu vel tortor. Ut vehicula augue tortor, vel ultrices ipsum viverra sed. Duis viverra id justo eget malesuada. Curabitur ut sodales lectus, eget ultricies urna. Nulla eu enim ultrices, suscipit urna ac, ornare lacus. Maecenas gravida magna et est tristique, vitae egestas dolor placerat. Donec urna tellus, lobortis nec augue elementum, egestas vehicula erat. Fusce venenatis quam posuere ornare viverra. Sed commodo dolor ac urna accumsan, ultricies ultrices risus porta. Vivamus a tincidunt elit. Vivamus sagittis turpis sit amet vulputate ultricies." />
+			<Label text="Pellentesque ac augue ac libero sagittis elementum. Sed hendrerit eros massa, euismod semper velit euismod at. Nam urna tellus, fringilla non diam vel, accumsan feugiat orci. Aliquam ac tortor leo. Ut tincidunt leo est, interdum luctus massa sodales nec. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam sodales congue lorem et iaculis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Integer porta hendrerit lectus, et faucibus nisl facilisis sit amet. Vivamus enim ante, posuere at euismod et, suscipit sed turpis. Aenean ullamcorper quam laoreet neque porttitor condimentum. Maecenas massa tellus, lacinia vitae egestas a, mattis in urna. Sed vel pharetra nibh, at luctus diam. Curabitur auctor quam arcu, at aliquam sapien faucibus at." />
+			<Label text="Nam vitae hendrerit nunc, in mattis nunc. Sed aliquet diam ut arcu mattis, non maximus nisl vulputate. Cras enim eros, faucibus sed feugiat sed, feugiat interdum mauris. Donec finibus fermentum egestas. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam est arcu, gravida quis sodales vel, ultricies in augue. Aliquam erat volutpat. Morbi libero turpis, sollicitudin ultrices nisi ac, scelerisque fermentum ipsum." />
+			<Label text="In commodo nibh sit amet ullamcorper molestie. Fusce convallis purus nisi. Suspendisse est erat, scelerisque non est eget, congue ornare lacus. Integer fermentum enim sit amet scelerisque finibus. Cras lobortis mauris non est sodales, a consectetur augue interdum. Pellentesque faucibus diam sit amet ipsum porttitor facilisis. Donec quis est quis nibh ultricies vestibulum a sit amet augue. Aliquam sit amet ligula urna. Pellentesque auctor nisl at tempus mattis." />
+			<Label text="Nulla sed luctus lacus, vitae elementum nunc. Aenean congue risus sed velit faucibus, eu dapibus nunc facilisis. Cras ac diam a tellus mattis semper. Vivamus lobortis fermentum consectetur. Aenean tellus nulla, mollis nec turpis sed, imperdiet scelerisque tellus. Maecenas non purus leo. Aliquam gravida blandit congue. Suspendisse finibus bibendum sollicitudin. Nullam efficitur orci eu vestibulum vulputate. In pretium purus at magna pellentesque euismod. Ut fermentum, tellus ac sollicitudin tempus, erat elit lobortis massa, non scelerisque urna arcu nec massa. Cras pulvinar, ligula et iaculis tincidunt, arcu nunc euismod quam, eget volutpat purus massa vulputate justo. Ut mauris augue, efficitur eu tempus nec, sagittis sit amet justo. Integer sit amet libero finibus, convallis enim eu, consectetur sapien." />
 		</VBox>
     </center>
 </BorderPane>

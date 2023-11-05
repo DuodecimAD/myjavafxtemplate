@@ -49,6 +49,7 @@
 #menuPane .button:focused {
 	-fx-background-color: #526D82;
 	-fx-text-fill: #DDE6ED;
+
 }
 /*
 #menuPane .button:pressed {
@@ -66,10 +67,14 @@
 #content{
 	-fx-background-color: -normal;
 	-fx-padding: 20;
+
+	
 }
 
 #content Label{
-	-fx-text-fill: -low;	
+	-fx-text-fill: -low;
+	-fx-wrap-text: true;
+	/*-fx-padding: 0 0 16 0;*/
 }
 
 

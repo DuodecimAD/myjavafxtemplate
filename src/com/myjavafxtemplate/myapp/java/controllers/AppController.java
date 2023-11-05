@@ -5,6 +5,7 @@ import com.myjavafxtemplate.myapp.java.utility.LoggerUtil;
 
 
 import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -48,7 +49,7 @@ public class AppController {
     private void setMenuContentButtons() {
 
 
-        File directory = new File(getClass().getResource(AppPaths.INSTANCE.appPath+"java/views/content").getPath());
+        File directory = new File(AppPaths.INSTANCE.appFullPath+"content");
 
 
         File[] files = directory.listFiles((dir, name) -> name.endsWith(".fxml"));
@@ -69,7 +70,7 @@ public class AppController {
             
 
         }else {
-        	System.out.println("File isn't working, so probably working from a jar : ");
+        	System.out.println("File isn't working, so probably within a jar : ");
 
         	// change to app/ for install
         	//try (JarFile jarFile = new JarFile("app/myjavafxtemplate.jar")) {
@@ -82,9 +83,9 @@ public class AppController {
         	        JarEntry entry = entries.nextElement();
         	        String path = entry.getName();
 
-        	        if (path.startsWith("com/myjavafxtemplate/myapp/java/views/content/") && path.endsWith(".fxml")) {
+        	        if (path.startsWith(AppPaths.INSTANCE.appPath+"content/") && path.endsWith(".fxml")) {
         	            
-        	            String fileName = path.substring("com/myjavafxtemplate/myapp/java/views/content/".length(), path.length() - ".fxml".length());
+        	            String fileName = path.substring((AppPaths.INSTANCE.appPath+"content/").length(), path.length() - (".fxml").length());
         	            System.out.println(fileName);
         	            Button button = new Button(fileName);
                         
@@ -122,10 +123,9 @@ public class AppController {
     
     public void loadContent(String fxmlName) {
         try {
-        	
-        	
-        	System.out.println(getClass().getResource(AppPaths.INSTANCE.appPath+"java/views/" + fxmlName));
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(AppPaths.INSTANCE.appPath+"java/views/" + fxmlName));
+        	URL pathUrl = new URL(AppPaths.INSTANCE.appUrlPath + fxmlName);
+        	System.out.println("loading "+pathUrl);
+            FXMLLoader loader = new FXMLLoader(pathUrl);
             VBox content = loader.load();
             content.setId("content");
             body.setCenter(content);
