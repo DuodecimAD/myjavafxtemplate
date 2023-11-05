@@ -4,9 +4,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Label?>
 
-<BorderPane fx:id="body" fx:controller="com.myjavafxtemplate.myapp.App" xmlns:fx="http://javafx.com/fxml/1" prefWidth="800" prefHeight="450" minWidth="500">
+<BorderPane fx:id="body" fx:controller="com.myjavafxtemplate.myapp.java.controllers.AppController" xmlns:fx="http://javafx.com/fxml/1" prefWidth="800" prefHeight="450" minWidth="500">
     <left>
-       	
+       	<VBox fx:id="menuPane">
+    		
+		</VBox>
     </left>
     <center>
         <VBox id="content">

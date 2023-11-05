@@ -1,3 +1,7 @@
+:root {
+    
+}
+
 #content{
 	-fx-background-color: #526D82;
 	-fx-padding: 20;
@@ -20,19 +24,7 @@
     -fx-effect: innershadow(three-pass-box, rgba(0,0,0,0.8), 7, 0, 0, 0);
 }
 
-
-
-/*******************************************************************************
- *                                                                             *
- * Button and ToggleButton                                                     *
- *                                                                             *
- ******************************************************************************/
-
-
-
-.button, .toggle-button {
-    
-
+#menuPane .button {
     -fx-background-radius: 0;
     -fx-background-insets: 0;
     -fx-background-color: #27374D;
@@ -44,33 +36,24 @@
     -fx-content-display: center;
 	-fx-pref-width: 150px;
 	-fx-pref-height: 50px;
-
-
 }
 
-.button:hover,
-.toggle-button:hover,
-.button:focused:hover,
-.toggle-button:focused:hover {
+#menuPane .button:hover, #menuPane .button:focused:hover {
     -fx-effect: innershadow(three-pass-box, rgba(0,0,0,0.8), 7, 0, 0, 0);
     -fx-background-color: #526D82;
     -fx-text-fill: #DDE6ED;
 }
 
-.button:pressed, .toggle-button:pressed
-{
+#menuPane .button:pressed {
     
 }
 
-.button:focused, .toggle-button:focused
-{
+#menuPane .button:focused {
 	-fx-background-color: #526D82;
 	-fx-text-fill: #DDE6ED;
-    
 }
 
-.button:disabled, .button:default:disabled, .toggle-button:disabled
-{
+#menuPane .button:disabled, #menuPane .button:default:disabled {
     -fx-opacity: 0.4;
     -fx-background-color: #DDE6ED;
     -fx-text-fill: yellow;
