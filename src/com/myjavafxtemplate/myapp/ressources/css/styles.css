@@ -1,4 +1,4 @@
-:root {
+.root {
     
 }
 
@@ -12,15 +12,18 @@
 	-fx-text-fill: #DDE6ED;	
 }
 
+
 #menuPane{
 	-fx-background-color: #27374D;
 	/*-fx-padding: 0 10 0 10;
 	-fx-pref-width: 170px;*/
 	-fx-alignement: center;
 	-fx-spacing: 5px;
-	-fx-padding: 50 0 0 0;
-    -fx-border-insets: 50 0 0 0;
-    /*-fx-background-insets: 50 0 0 0;*/
+	
+	/* next 2 lines to create margin */
+	-fx-padding: 30 0 0 0;
+    -fx-border-insets: 30 0 0 0;
+
     -fx-effect: innershadow(three-pass-box, rgba(0,0,0,0.8), 7, 0, 0, 0);
 }
 

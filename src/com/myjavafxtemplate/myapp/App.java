@@ -3,6 +3,7 @@ package com.myjavafxtemplate.myapp;
 
 import java.io.IOException;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -14,7 +15,7 @@ import com.myjavafxtemplate.myapp.java.utility.LoggerUtil;
 
 public class App extends Application {
 	
-	
+
 	String mainFxml = "App.fxml";
 
 	
@@ -25,8 +26,25 @@ public class App extends Application {
     	//System.out.println(System.getProperty("user.home"));
         //System.out.println(getClass().getResource("/com/myjavafxtemplate/myapp/java/views/"+mainFxml));
 
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource(AppPaths.INSTANCE.appPath+"java/views/"+mainFxml));
+		
+		setPrimaryStage(primaryStage);
+		
+		
+    }
+
+    public static void main(String[] args) {
+    	LoggerUtil.setupLogging();
+
+    	launch(args); 
+        
+        LoggerUtil.getLogger().info("Closing");
+    }
+    
+    
+    private void setPrimaryStage(Stage primaryStage) {
+    	
+    	try {
+	    	FXMLLoader loader = new FXMLLoader(getClass().getResource(AppPaths.INSTANCE.appPath+"java/views/"+mainFxml));
 			LoggerUtil.getLogger().info("initialize will be called now");
 			Parent root = loader.load();
 			LoggerUtil.getLogger().info("fxml loaded");
@@ -36,7 +54,7 @@ public class App extends Application {
 			//Model model = new Model();
 			//controller.setModel(model);
 			primaryStage.setScene(new Scene(root));
-			primaryStage.setTitle("App.fxml");
+			primaryStage.setTitle(mainFxml);
 			primaryStage.setMinWidth(500);
 			primaryStage.setMinHeight(450);
 			/*primaryStage.initStyle(StageStyle.DECORATED);
@@ -44,18 +62,12 @@ public class App extends Application {
 			primaryStage.setMaximized(true); // Allow maximizing */
 	        primaryStage.show();
 	        LoggerUtil.getLogger().info("primaryStage loaded");
-		} catch (IOException e) {
+    	} catch (IOException e) {
 			e.printStackTrace();
 			LoggerUtil.getLogger().severe(e.getMessage());
 		}
-    }
-
-    public static void main(String[] args) {
-    	LoggerUtil.setupLogging();
-
-    	launch(args); 
-        
-        LoggerUtil.getLogger().info("Closing");
+    	
+    	
     }
     
 

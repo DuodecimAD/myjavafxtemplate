@@ -2,6 +2,7 @@ package com.myjavafxtemplate.myapp.java.utility;
 
 import java.io.IOException;
 import java.util.logging.FileHandler;
+import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
@@ -18,7 +19,8 @@ public class LoggerUtil {
 	
     public static void setupLogging() {
     	
-    	/*
+    	/* if want to create logging folder elsewhere
+    	
     	File logFolder = new File(appPath);
         if (!logFolder.exists()) {
             if (logFolder.mkdirs()) {
@@ -30,6 +32,12 @@ public class LoggerUtil {
         */
     	
         try {
+        	// this remoive the console spam
+        	Logger globalLogger = Logger.getLogger("");
+        	Handler[] handlers = globalLogger.getHandlers();
+            for (Handler handler : handlers) {
+                globalLogger.removeHandler(handler);
+            }
         	
             // Create a file handler
         	// String fullPath = LoggerUtil.class.getClassLoader().getResource("com/myjavafxtemplate/myapp/").getPath().replaceFirst("^/(.:/)", "$1");
