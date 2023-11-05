@@ -1,65 +1,75 @@
-.root {
+* {
+    -dark: rgb(39,55,77);
+    -normal: rgb(92,109,130);
+    -light: rgb(157,178,191);
+    -low: rgb(221,230,237);
     
+    -fx-font-size: 16px;
 }
-
-#content{
-	-fx-background-color: #526D82;
-	-fx-padding: 20;
-	-fx-font-size: 16px;
-}
-
-#content Label{
-	-fx-text-fill: #DDE6ED;	
-}
-
 
 #menuPane{
-	-fx-background-color: #27374D;
-	/*-fx-padding: 0 10 0 10;
-	-fx-pref-width: 170px;*/
+	-fx-background-color: -dark;
 	-fx-alignement: center;
-	-fx-spacing: 5px;
 	
 	/* next 2 lines to create margin */
 	-fx-padding: 30 0 0 0;
     -fx-border-insets: 30 0 0 0;
 
-    -fx-effect: innershadow(three-pass-box, rgba(0,0,0,0.8), 7, 0, 0, 0);
+    -fx-effect: innershadow(three-pass-box, rgba(0,0,0,0.8), 5, 0, 0, 0);
 }
 
 #menuPane .button {
     -fx-background-radius: 0;
     -fx-background-insets: 0;
-    -fx-background-color: #27374D;
+    -fx-background-color: -dark;
 
-    -fx-font-family: "Segoe UI";
-    -fx-font-size: 1.3em; /* 12 */
-    -fx-text-fill: #DDE6ED;
+    -fx-text-fill: -low;
 
-    -fx-content-display: center;
 	-fx-pref-width: 150px;
 	-fx-pref-height: 50px;
 }
 
-#menuPane .button:hover, #menuPane .button:focused:hover {
-    -fx-effect: innershadow(three-pass-box, rgba(0,0,0,0.8), 7, 0, 0, 0);
-    -fx-background-color: #526D82;
-    -fx-text-fill: #DDE6ED;
+#menuButtons{
+	-fx-spacing: 2px;
 }
 
-#menuPane .button:pressed {
-    
+#menuPane .button:hover, #menuPane .button:focused:hover {
+    -fx-effect: innershadow(three-pass-box, rgba(200,200,200,0.2), 15, 0, 0, 0);
+    /*-fx-background-color: -light;*/
+    /*-fx-text-fill: -dark;*/
+    /*-fx-text-fill: red;*/
+    -fx-padding: 0 0 0 8px;
+}
+
+#menuPane .button:focused:hover{
+	-fx-padding: 0;
+	-fx-effect: none;
 }
 
 #menuPane .button:focused {
 	-fx-background-color: #526D82;
 	-fx-text-fill: #DDE6ED;
 }
+/*
+#menuPane .button:pressed {
+    
+}
+
+
 
 #menuPane .button:disabled, #menuPane .button:default:disabled {
     -fx-opacity: 0.4;
     -fx-background-color: #DDE6ED;
     -fx-text-fill: yellow;
+}
+*/
+#content{
+	-fx-background-color: -normal;
+	-fx-padding: 20;
+}
+
+#content Label{
+	-fx-text-fill: -low;	
 }
 
 

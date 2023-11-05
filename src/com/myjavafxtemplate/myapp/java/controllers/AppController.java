@@ -1,13 +1,12 @@
 package com.myjavafxtemplate.myapp.java.controllers;
 
+import com.myjavafxtemplate.myapp.java.utility.AppPaths;
+import com.myjavafxtemplate.myapp.java.utility.LoggerUtil;
+
 import java.io.File;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.myjavafxtemplate.myapp.java.utility.AppPaths;
-import com.myjavafxtemplate.myapp.java.utility.LoggerUtil;
-
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -37,13 +36,12 @@ public class AppController {
     
     ////////////////////////////////////////////////////////////////////////////////
     
-    
     private void setMenu() {
     	setMenuContentButtons();
     	setMenuSettingsButton();
+    	menuButtonsAction();
     }
     
-
     private void setMenuContentButtons() {
         File directory = null;
         try {
@@ -65,6 +63,7 @@ public class AppController {
                 buttonsMenu.add(button);
             }
             VBox menuButtons = new VBox();
+            menuButtons.setId("menuButtons");
             menuButtons.getChildren().addAll(buttonsMenu);
             menuPane.setCenter(menuButtons);
             
@@ -77,6 +76,7 @@ public class AppController {
     private void setMenuSettingsButton() {
     	Button settingsButton = new Button();
         settingsButton.setText("Settings");
+        settingsButton.setId("settingsButton");
         settingsButton.setOnAction(event -> loadContent("settings.fxml"));
         menuPane.setBottom(settingsButton);
 
@@ -92,4 +92,9 @@ public class AppController {
             e.printStackTrace();
         }
     }
+    
+    public void menuButtonsAction() {
+    	
+    }
+    
 }

@@ -1,5 +1,9 @@
 package com.myjavafxtemplate.myapp;
 
+import com.myjavafxtemplate.myapp.java.utility.AppMemory;
+import com.myjavafxtemplate.myapp.java.utility.AppPaths;
+import com.myjavafxtemplate.myapp.java.utility.AppTree;
+import com.myjavafxtemplate.myapp.java.utility.LoggerUtil;
 
 import java.io.IOException;
 import javafx.application.Application;
@@ -9,38 +13,36 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import com.myjavafxtemplate.myapp.java.utility.AppPaths;
-import com.myjavafxtemplate.myapp.java.utility.LoggerUtil;
-
 
 public class App extends Application {
 	
 
 	String mainFxml = "App.fxml";
 
+	public static void main(String[] args) {
+
+    	launch(args); 
+        LoggerUtil.getLogger().info("Main Closing");
+    }
 	
     @Override
     public void start(Stage primaryStage)  throws Exception {
-    	LoggerUtil.getLogger().info("Starting");
+    	LoggerUtil.setupLogging();
+    	LoggerUtil.getLogger().info("Start method called");
     	
-    	//System.out.println(System.getProperty("user.home"));
-        //System.out.println(getClass().getResource("/com/myjavafxtemplate/myapp/java/views/"+mainFxml));
-
-		
 		setPrimaryStage(primaryStage);
 		
+		Platform.runLater(() -> {
+			System.out.println("///////////////Tree//////////////////");
+	        AppTree.printScene(primaryStage.getScene());
+	        System.out.println("//////////////Memory/////////////////");
+	        AppMemory.printMemoryUsage();
+    	});
 		
+		LoggerUtil.getLogger().info("start method finished");
+
     }
 
-    public static void main(String[] args) {
-    	LoggerUtil.setupLogging();
-
-    	launch(args); 
-        
-        LoggerUtil.getLogger().info("Closing");
-    }
-    
-    
     private void setPrimaryStage(Stage primaryStage) {
     	
     	try {
@@ -50,9 +52,7 @@ public class App extends Application {
 			LoggerUtil.getLogger().info("fxml loaded");
 			root.getStylesheets().add(AppPaths.INSTANCE.appPath+"ressources/css/styles.css");
 			LoggerUtil.getLogger().info("css loaded");
-			//AppController controller = loader.getController();
-			//Model model = new Model();
-			//controller.setModel(model);
+			
 			primaryStage.setScene(new Scene(root));
 			primaryStage.setTitle(mainFxml);
 			primaryStage.setMinWidth(500);
@@ -61,14 +61,12 @@ public class App extends Application {
 			primaryStage.setResizable(false); // Prevent window resizing
 			primaryStage.setMaximized(true); // Allow maximizing */
 	        primaryStage.show();
-	        LoggerUtil.getLogger().info("primaryStage loaded");
+	        LoggerUtil.getLogger().info("primaryStage loaded");	        
+
     	} catch (IOException e) {
 			e.printStackTrace();
 			LoggerUtil.getLogger().severe(e.getMessage());
 		}
-    	
-    	
     }
-    
 
 }
