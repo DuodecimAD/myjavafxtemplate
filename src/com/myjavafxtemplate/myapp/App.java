@@ -27,7 +27,7 @@ public class App extends Application {
 	
     @Override
     public void start(Stage primaryStage)  throws Exception {
-    	LoggerUtil.setupLogging();
+    	//LoggerUtil.setupLogging();
     	LoggerUtil.getLogger().info("Start method called");
     	
 		setPrimaryStage(primaryStage);
@@ -46,7 +46,7 @@ public class App extends Application {
     private void setPrimaryStage(Stage primaryStage) {
     	
     	try {
-	    	FXMLLoader loader = new FXMLLoader(getClass().getResource("java/views/"+mainFxml));
+	    	FXMLLoader loader = new FXMLLoader(getClass().getResource(AppPaths.INSTANCE.appPath+"java/views/"+mainFxml));
 			LoggerUtil.getLogger().info("initialize will be called now");
 			Parent root = loader.load();
 			LoggerUtil.getLogger().info("fxml loaded");

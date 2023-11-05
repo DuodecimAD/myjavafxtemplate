@@ -42,6 +42,7 @@ public class LoggerUtil {
         	// String fullPath = LoggerUtil.class.getClassLoader().getResource("com/myjavafxtemplate/myapp/").getPath().replaceFirst("^/(.:/)", "$1");
             FileHandler fileHandler = new FileHandler(System.getProperty("user.home") + "/documents/com.myjavafxtemplate.myapp/logs/log%g.log", 50000, 20, true);
             
+            
             fileHandler.setLevel(Level.ALL);
             fileHandler.setFormatter(new SimpleFormatter());
 

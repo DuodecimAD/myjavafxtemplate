@@ -3,21 +3,13 @@ package com.myjavafxtemplate.myapp.java.controllers;
 import com.myjavafxtemplate.myapp.java.utility.AppPaths;
 import com.myjavafxtemplate.myapp.java.utility.LoggerUtil;
 
+
 import java.io.File;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.security.CodeSource;
-import java.security.ProtectionDomain;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -77,7 +69,44 @@ public class AppController {
             
 
         }else {
-        	System.out.println("there are no fxml to load");
+        	System.out.println("File isn't working, so probably working from a jar : ");
+
+        	// change to app/ for install
+        	//try (JarFile jarFile = new JarFile("app/myjavafxtemplate.jar")) {
+        	try (JarFile jarFile = new JarFile("myjavafxtemplate.jar")) {
+        	    Enumeration<JarEntry> entries = jarFile.entries();
+        	    
+        	    long startTime = System.currentTimeMillis();
+        	    
+        	    while (entries.hasMoreElements()) {
+        	        JarEntry entry = entries.nextElement();
+        	        String path = entry.getName();
+
+        	        if (path.startsWith("com/myjavafxtemplate/myapp/java/views/content/") && path.endsWith(".fxml")) {
+        	            
+        	            String fileName = path.substring("com/myjavafxtemplate/myapp/java/views/content/".length(), path.length() - ".fxml".length());
+        	            System.out.println(fileName);
+        	            Button button = new Button(fileName);
+                        
+                        button.setOnAction(event -> loadContent("content/"+fileName+".fxml"));
+                        
+                        buttonsMenu.add(button);
+
+        	        }
+        	    }
+        	    long endTime = System.currentTimeMillis();
+        	    long totalTime = endTime - startTime;
+
+        	    // print the total time to the console
+        	    System.out.println("Total time: " + totalTime + " milliseconds");
+        	    
+        	    VBox menuButtons = new VBox();
+                menuButtons.setId("menuButtons");
+                menuButtons.getChildren().addAll(buttonsMenu);
+                menuPane.setCenter(menuButtons);
+        	} catch (Exception e) {
+        	    e.printStackTrace();
+        	}
         	
         }
     }
@@ -86,13 +115,16 @@ public class AppController {
     	Button settingsButton = new Button();
         settingsButton.setText("Settings");
         settingsButton.setId("settingsButton");
-        settingsButton.setOnAction(event -> loadContent("settings.fxml"));
+        settingsButton.setOnAction(event -> loadContent("Settings.fxml"));
         menuPane.setBottom(settingsButton);
 
     }
     
     public void loadContent(String fxmlName) {
         try {
+        	
+        	
+        	System.out.println(getClass().getResource(AppPaths.INSTANCE.appPath+"java/views/" + fxmlName));
             FXMLLoader loader = new FXMLLoader(getClass().getResource(AppPaths.INSTANCE.appPath+"java/views/" + fxmlName));
             VBox content = loader.load();
             content.setId("content");
