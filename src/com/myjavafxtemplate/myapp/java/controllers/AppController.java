@@ -4,9 +4,20 @@ import com.myjavafxtemplate.myapp.java.utility.AppPaths;
 import com.myjavafxtemplate.myapp.java.utility.LoggerUtil;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.security.CodeSource;
+import java.security.ProtectionDomain;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
+
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -43,13 +54,10 @@ public class AppController {
     }
     
     private void setMenuContentButtons() {
-        File directory = null;
-        try {
-        	//System.out.println(getClass().getProtectionDomain().getCodeSource().getLocation());
-            directory = new File(getClass().getResource(AppPaths.INSTANCE.appPath+"java/views/content").toURI());
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
+
+
+        File directory = new File(getClass().getResource(AppPaths.INSTANCE.appPath+"java/views/content").getPath());
+
 
         File[] files = directory.listFiles((dir, name) -> name.endsWith(".fxml"));
 
@@ -70,6 +78,7 @@ public class AppController {
 
         }else {
         	System.out.println("there are no fxml to load");
+        	
         }
     }
 

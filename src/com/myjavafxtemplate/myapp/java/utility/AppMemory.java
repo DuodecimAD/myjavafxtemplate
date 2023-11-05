@@ -3,7 +3,7 @@ package com.myjavafxtemplate.myapp.java.utility;
 public class AppMemory {
 	
     public static void printMemoryUsage() {
-        
+    	System.out.println("//////////////Memory/////////////////");
         // Get the runtime object
         Runtime runtime = Runtime.getRuntime();
         

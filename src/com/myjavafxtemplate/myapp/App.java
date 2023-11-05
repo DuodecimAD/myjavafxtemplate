@@ -33,10 +33,10 @@ public class App extends Application {
 		setPrimaryStage(primaryStage);
 		
 		Platform.runLater(() -> {
-			System.out.println("///////////////Tree//////////////////");
-	        AppTree.printScene(primaryStage.getScene());
-	        System.out.println("//////////////Memory/////////////////");
-	        AppMemory.printMemoryUsage();
+			
+	        //AppTree.printScene(primaryStage.getScene());
+	        //AppMemory.printMemoryUsage();
+	        
     	});
 		
 		LoggerUtil.getLogger().info("start method finished");
@@ -46,7 +46,7 @@ public class App extends Application {
     private void setPrimaryStage(Stage primaryStage) {
     	
     	try {
-	    	FXMLLoader loader = new FXMLLoader(getClass().getResource(AppPaths.INSTANCE.appPath+"java/views/"+mainFxml));
+	    	FXMLLoader loader = new FXMLLoader(getClass().getResource("java/views/"+mainFxml));
 			LoggerUtil.getLogger().info("initialize will be called now");
 			Parent root = loader.load();
 			LoggerUtil.getLogger().info("fxml loaded");

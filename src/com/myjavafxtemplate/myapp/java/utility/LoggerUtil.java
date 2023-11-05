@@ -1,5 +1,6 @@
 package com.myjavafxtemplate.myapp.java.utility;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
@@ -19,9 +20,7 @@ public class LoggerUtil {
 	
     public static void setupLogging() {
     	
-    	/* if want to create logging folder elsewhere
-    	
-    	File logFolder = new File(appPath);
+    	File logFolder = new File(System.getProperty("user.home") + "/documents/com.myjavafxtemplate.myapp/logs/");
         if (!logFolder.exists()) {
             if (logFolder.mkdirs()) {
                 logger.info("Log folder created");
@@ -29,7 +28,7 @@ public class LoggerUtil {
                 logger.warning("Failed to create log folder");
             }
         }
-        */
+        
     	
         try {
         	// this remoive the console spam
@@ -41,7 +40,7 @@ public class LoggerUtil {
         	
             // Create a file handler
         	// String fullPath = LoggerUtil.class.getClassLoader().getResource("com/myjavafxtemplate/myapp/").getPath().replaceFirst("^/(.:/)", "$1");
-            FileHandler fileHandler = new FileHandler(AppPaths.INSTANCE.appFullPath+"output/log%g.log", 50000, 20, true);
+            FileHandler fileHandler = new FileHandler(System.getProperty("user.home") + "/documents/com.myjavafxtemplate.myapp/logs/log%g.log", 50000, 20, true);
             
             fileHandler.setLevel(Level.ALL);
             fileHandler.setFormatter(new SimpleFormatter());

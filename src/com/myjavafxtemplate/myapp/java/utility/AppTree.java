@@ -8,6 +8,7 @@ import javafx.scene.text.Text;
 public class AppTree {
 	
 	public static void printScene(Scene scene) {
+		System.out.println("///////////////Tree//////////////////");
         System.out.println("Scene Details:");
         System.out.println("Width: " + scene.getWidth());
         System.out.println("Height: " + scene.getHeight());
