@@ -1,14 +1,19 @@
 * {
-    -dark: rgb(39,55,77);
-    -normal: rgb(92,109,130);
-    -light: rgb(157,178,191);
-    -low: rgb(221,230,237);
+	/*
+		https://www.realtimecolors.com/dashboard?colors=dee7ed-3b4a5e-24447a-1c2c3f-66a8ff&fonts=Poppins-Poppins
+	*/
+	-text: rgb(221,230,237);
+	-background: rgb(59, 74, 94);
+	-primary: rgb(36, 67, 121);
+    -secondary: rgb(29, 45, 65);
+    -accent: rgb(100, 167, 255);
     
     -fx-font-size: 16px;
+    -fx-text-fill: -text;
 }
 
 #menuPane{
-	-fx-background-color: -dark;
+	-fx-background-color: -secondary;
 	-fx-alignement: center;
 	
 	/* next 2 lines to create margin */
@@ -21,9 +26,7 @@
 #menuPane .button {
     -fx-background-radius: 0;
     -fx-background-insets: 0;
-    -fx-background-color: -dark;
-
-    -fx-text-fill: -low;
+    -fx-background-color: -secondary;
 
 	-fx-pref-width: 150px;
 	-fx-pref-height: 50px;
@@ -35,8 +38,8 @@
 
 #menuPane .button:hover, #menuPane .button:focused:hover {
     -fx-effect: innershadow(three-pass-box, rgba(200,200,200,0.2), 15, 0, 0, 0);
-    /*-fx-background-color: -light;*/
-    /*-fx-text-fill: -dark;*/
+    /*-fx-background-color: -primary;*/
+    /*-fx-text-fill: -secondary;*/
     /*-fx-text-fill: red;*/
     -fx-padding: 0 0 0 8px;
 }
@@ -47,8 +50,8 @@
 }
 
 #menuPane .button:focused {
-	-fx-background-color: #526D82;
-	-fx-text-fill: #DDE6ED;
+	-fx-background-color: -background;
+	
 
 }
 /*
@@ -65,14 +68,14 @@
 }
 */
 #content{
-	-fx-background-color: -normal;
+	-fx-background-color: -background;
 	-fx-padding: 20;
 
 	
 }
 
 #content Label{
-	-fx-text-fill: -low;
+	-fx-text-fill: -text;
 	-fx-wrap-text: true;
 	/*-fx-padding: 0 0 16 0;*/
 }

@@ -22,7 +22,7 @@ public class AppController {
     @FXML private BorderPane body;
     @FXML private BorderPane menuPane;
 
-    static List<Button> buttonsMenu = new ArrayList<Button>();
+    static List<Button> buttonsMenu = new ArrayList<Button>(); 
 
     @FXML
     public void initialize() {

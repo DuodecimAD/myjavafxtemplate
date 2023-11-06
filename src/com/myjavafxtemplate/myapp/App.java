@@ -1,5 +1,6 @@
 package com.myjavafxtemplate.myapp;
 
+import com.myjavafxtemplate.myapp.java.utility.AppConnect;
 import com.myjavafxtemplate.myapp.java.utility.AppMemory;
 import com.myjavafxtemplate.myapp.java.utility.AppPaths;
 import com.myjavafxtemplate.myapp.java.utility.AppTree;
@@ -22,7 +23,7 @@ public class App extends Application {
 	String mainFxml = "App.fxml";
 
 	public static void main(String[] args) {
-
+		
     	launch(args); 
         LoggerUtil.getLogger().info("Main Closing");
     }
@@ -35,7 +36,7 @@ public class App extends Application {
 		setPrimaryStage(primaryStage);
 		
 		Platform.runLater(() -> {
-			
+			new AppConnect();
 	        //AppTree.printScene(primaryStage.getScene());
 	        //AppMemory.printMemoryUsage();
 	        
