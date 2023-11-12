@@ -8,6 +8,8 @@ import com.myjavafxtemplate.myapp.java.utility.LoggerUtil;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -36,13 +38,28 @@ public class App extends Application {
 		setPrimaryStage(primaryStage);
 		
 		Platform.runLater(() -> {
-			new AppConnect();
+			
 	        //AppTree.printScene(primaryStage.getScene());
 	        //AppMemory.printMemoryUsage();
 	        
     	});
 		
 		LoggerUtil.getLogger().info("start method finished");
+		
+		List<List<?>> test = List.of(
+				List.of("NOM_COMP"),
+		        List.of("f"),
+		        List.of("g"),
+		        List.of("c"),
+		        List.of("h"),
+		        List.of("e")
+		);
+		
+		List<Integer> check = List.of(0);
+		
+		AppConnect appConnect = new AppConnect();
+		appConnect.dbCreate("COMPETENCE", test, check);
+
 
     }
 

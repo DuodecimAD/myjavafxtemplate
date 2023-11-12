@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 public class AppConnect {
 	private Connection conn;
@@ -31,33 +32,69 @@ public class AppConnect {
     }
 }
 	
-	/*
+	
 
-    public void insert(String characterName, int typeId) {
-        String sqlCheck = "SELECT COUNT(*) AS count FROM Perso WHERE name_character = ?";
-        String sqlInsert = "INSERT INTO Perso(name_character, id_type_character) VALUES(?, ?)";
-        int count = 0;
+    public void dbCreate(String tableName, List<List<?>> dataString, List<Integer> checkPositions) {
+    	    	
+    	 String columns = "";
+    	 String values = "";
 
-        try (PreparedStatement pstmt1 = conn.prepareStatement(sqlCheck);
-             PreparedStatement pstmt2 = conn.prepareStatement(sqlInsert)) {
+    	 for (int i = 0; i < dataString.get(0).size(); i++) {
+    		 
+			columns += dataString.get(0).get(i);
+			values += "?";
 
-            pstmt1.setString(1, characterName);
-            ResultSet rs = pstmt1.executeQuery();
-            count = rs.getInt("count");
+			if (i < dataString.get(0).size() - 1) {
+	            columns += ", ";
+	            values += ", ";
+	        }
+		}
+    	 
+    	 String sqlInsert = "INSERT INTO "+ tableName +"("+ columns +") VALUES("+ values +")";
+    	 String checkIfExists = "SELECT COUNT(*) AS count FROM " + tableName + " WHERE ";
 
-            if (count > 0) {
-                System.out.println("Character already created");
-            } else {
-                pstmt2.setString(1, characterName);
-                pstmt2.setInt(2, typeId);
-                pstmt2.executeUpdate();
-                System.out.println("A new character was inserted successfully!");
-            }
+    	    for (int position : checkPositions) {
+    	        checkIfExists += dataString.get(0).get(position) + " = ? OR ";
+    	    }
+
+    	    // Remove the trailing "OR" from the WHERE clause
+    	    checkIfExists = checkIfExists.substring(0, checkIfExists.length() - 4);
+
+        try (PreparedStatement pstmtCheck = conn.prepareStatement(checkIfExists);
+             PreparedStatement pstmtInsert = conn.prepareStatement(sqlInsert)) {
+
+             // Set the parameters based on the dataString list
+        	  for (int i = 1; i < dataString.size(); i++) {
+                  // Set parameters for the WHERE clause based on checkPositions
+                  for (int j = 0; j < checkPositions.size(); j++) {
+                      pstmtCheck.setString(j + 1, (String) dataString.get(i).get(checkPositions.get(j)));
+                  }
+
+                  ResultSet rs = pstmtCheck.executeQuery();
+                  
+               // Move the cursor to the first row (if any)
+                  if (rs.next()) {
+                  int count = rs.getInt("count");
+                  
+                  if (count == 0) {
+                      // Set the parameters based on the dataString list
+                      for (int j = 0; j < dataString.get(i).size(); j++) {
+                          pstmtInsert.setObject(j + 1, dataString.get(i).get(j));
+                      }
+
+                      pstmtInsert.executeUpdate();
+                      System.out.println("Insert was inserted successfully!");
+                  } else {
+                      System.out.println(dataString.get(i) + " already exists");
+                  }
+                  }
+              }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
-
+    
+/*
     public void delete(String characterName) {
         String sql = "DELETE FROM Perso WHERE name_character = '" + characterName + "'";
 
