@@ -1,6 +1,7 @@
 package com.myjavafxtemplate.myapp.java.controllers;
 
-import com.myjavafxtemplate.myapp.java.utility.AppPaths;
+
+import com.myjavafxtemplate.myapp.java.utility.AppSettings;
 import com.myjavafxtemplate.myapp.java.utility.LoggerUtil;
 
 
@@ -49,7 +50,7 @@ public class AppController {
     private void setMenuContentButtons() {
 
 
-        File directory = new File(AppPaths.INSTANCE.appFullPath+"content");
+        File directory = new File(AppSettings.INSTANCE.appFullPath+"content");
 
 
         File[] files = directory.listFiles((dir, name) -> name.endsWith(".fxml"));
@@ -83,9 +84,9 @@ public class AppController {
         	        JarEntry entry = entries.nextElement();
         	        String path = entry.getName();
 
-        	        if (path.startsWith(AppPaths.INSTANCE.appPath+"content/") && path.endsWith(".fxml")) {
+        	        if (path.startsWith(AppSettings.INSTANCE.contentPath) && path.endsWith(".fxml")) {
         	            
-        	            String fileName = path.substring((AppPaths.INSTANCE.appPath+"content/").length(), path.length() - (".fxml").length());
+        	            String fileName = path.substring((AppSettings.INSTANCE.contentPath).length(), path.length() - (".fxml").length());
         	            System.out.println(fileName);
         	            Button button = new Button(fileName);
                         
@@ -123,7 +124,7 @@ public class AppController {
     
     public void loadContent(String fxmlName) {
         try {
-        	URL pathUrl = new URL(AppPaths.INSTANCE.appUrlPath + fxmlName);
+        	URL pathUrl = new URL(AppSettings.INSTANCE.appUrlPath + fxmlName);
         	System.out.println("loading "+pathUrl);
             FXMLLoader loader = new FXMLLoader(pathUrl);
             VBox content = loader.load();
