@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.myjavafxtemplate.myapp.java.utility.database;
 
 import java.sql.Connection;
@@ -8,15 +11,30 @@ import java.util.List;
 
 import com.myjavafxtemplate.myapp.java.utility.AppSecurity;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class DbCreate.
+ */
 public class DbCreate {
 	
+	/** The conn. */
 	private static Connection conn = DbConnect.sharedConnection();
 
+	/**
+	 * Instantiates a new db create.
+	 */
 	// Private constructor to prevent instantiation
 	private DbCreate() {
 	    
 	}
 	
+	/**
+	 * Insert.
+	 *
+	 * @param tableName the table name
+	 * @param dataString the data string LIST 1st line = columns, other lines = data
+	 * @param checkPositions the check positions LIST
+	 */
 	public static void insert(String tableName, List<List<String>> dataString, List<Integer> checkPositions) {
 		tableName = AppSecurity.sanitize(tableName);
 		dataString = AppSecurity.sanitizeDouble(dataString);

@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.myjavafxtemplate.myapp.java.utility.database;
 
 import java.sql.Connection;
@@ -11,16 +14,31 @@ import java.util.List;
 
 import com.myjavafxtemplate.myapp.java.utility.AppSecurity;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class DbRead.
+ */
 public class DbRead {
 	
+	/** The conn. */
 	private static Connection conn = DbConnect.sharedConnection();
 
+	/**
+	 * Instantiates a new db read.
+	 */
 	// Private constructor to prevent instantiation
 	private DbRead() {
 	    
 	}
 	
-	public static List<List<?>> read(String tableName, String sortBy) {
+	/**
+	 * Read.
+	 *
+	 * @param tableName the table name
+	 * @param sortBy the sort by
+	 * @return the list
+	 */
+	public static List<List<String>> read(String tableName, String sortBy) {
 		tableName = AppSecurity.sanitize(tableName);
 		sortBy = AppSecurity.sanitize(sortBy);
 		
@@ -30,15 +48,15 @@ public class DbRead {
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             ResultSet rs = pstmt.executeQuery();
 
-            List<List<?>> resultList = new ArrayList<>();
+            List<List<String>> resultList = new ArrayList<>();
             
             ResultSetMetaData metaData = rs.getMetaData();
             int columnCount = metaData.getColumnCount();
 
             while (rs.next()) {
-            	List<Object> row = new ArrayList<>();
+            	List<String> row = new ArrayList<>();
                 for (int i = 1; i <= columnCount; i++) {
-                    row.add(rs.getObject(i));
+                    row.add(rs.getString(i));
                 }
                 resultList.add(row);
             }
@@ -56,11 +74,20 @@ public class DbRead {
     }
 	
 	
-	public static List<?> read(String tableName, List<String> dataString, String key, String value) {
+	/**
+	 * Read.
+	 *
+	 * @param tableName the table name
+	 * @param dataString the data string
+	 * @param keyExist check from this column if valueExist already exist
+	 * @param valueExist check with this value if it's already exist
+	 * @return the list
+	 */
+	public static List<?> read(String tableName, List<String> dataString, String keyExist, String valueExist) {
 		tableName = AppSecurity.sanitize(tableName);
 		dataString = AppSecurity.sanitize(dataString);
-		key = AppSecurity.sanitize(key);
-		value = AppSecurity.sanitize(value);
+		keyExist = AppSecurity.sanitize(keyExist);
+		valueExist = AppSecurity.sanitize(valueExist);
 
     	String columns = "";
 
@@ -71,11 +98,11 @@ public class DbRead {
 	        }
 		}
     	
-        String sql = "SELECT "+ columns +" FROM "+ tableName +" WHERE "+ key +" = ?";
+        String sql = "SELECT "+ columns +" FROM "+ tableName +" WHERE "+ keyExist +" = ?";
         
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
         	
-            pstmt.setString(1, value);
+            pstmt.setString(1, valueExist);
             ResultSet rs = pstmt.executeQuery();
 
             List<Object> resultList = new ArrayList<>();

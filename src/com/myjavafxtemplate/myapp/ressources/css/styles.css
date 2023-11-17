@@ -79,6 +79,18 @@
 	-fx-wrap-text: true;
 	/*-fx-padding: 0 0 16 0;*/
 }
+#Table_Client *{
+	-fx-text-fill: -primary;
+}
+
+TextField, #content Button{
+	-fx-text-fill: -primary;
+	/*-fx-padding: 0 0 16 0;*/
+}
+
+#Delete_Client{
+	-fx-text-fill: #bc0e0e;
+}
 
 
 

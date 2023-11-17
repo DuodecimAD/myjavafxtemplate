@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.myjavafxtemplate.myapp;
 
 import com.myjavafxtemplate.myapp.java.utility.AppMemory;
@@ -22,17 +25,33 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class App.
+ */
 public class App extends Application {
 	
 
+	/** The main fxml. */
 	String mainFxml = "App.fxml";
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		
     	launch(args); 
         LoggerUtil.getLogger().info("Main Closing");
     }
 	
+    /**
+     * Start.
+     *
+     * @param primaryStage the primary stage
+     * @throws Exception the exception
+     */
     @Override
     public void start(Stage primaryStage)  throws Exception {
     	//LoggerUtil.setupLogging();
@@ -64,7 +83,7 @@ public class App extends Application {
 		List<Integer> check = List.of(3,4);
 		DbCreate.insert("SPECIALISTE", test, check);
 		*/
-		
+
 		// dbRead
 		/*
 		List<String> test = List.of("ID_CLIENT");
@@ -85,6 +104,11 @@ public class App extends Application {
 
     }
 
+    /**
+     * Sets the primary stage.
+     *
+     * @param primaryStage the new primary stage
+     */
     private void setPrimaryStage(Stage primaryStage) {
     	
     	try {
@@ -98,8 +122,8 @@ public class App extends Application {
 			
 			primaryStage.setScene(new Scene(root));
 			primaryStage.setTitle(mainFxml);
-			primaryStage.setMinWidth(500);
-			primaryStage.setMinHeight(450);
+			primaryStage.setMinWidth(1000);
+			primaryStage.setMinHeight(600);
 			/*primaryStage.initStyle(StageStyle.DECORATED);
 			primaryStage.setResizable(false); // Prevent window resizing
 			primaryStage.setMaximized(true); // Allow maximizing */

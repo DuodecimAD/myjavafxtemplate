@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.myjavafxtemplate.myapp.java.controllers;
 
 
@@ -19,12 +22,24 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class AppController.
+ */
 public class AppController {
+    
+    /** The body. */
     @FXML private BorderPane body;
+    
+    /** The menu pane. */
     @FXML private BorderPane menuPane;
 
+    /** The buttons menu. */
     static List<Button> buttonsMenu = new ArrayList<Button>(); 
 
+    /**
+     * Initialize.
+     */
     @FXML
     public void initialize() {
     	LoggerUtil.getLogger().info("Initialize method called");
@@ -41,12 +56,18 @@ public class AppController {
     
     ////////////////////////////////////////////////////////////////////////////////
     
+    /**
+     * Sets the menu.
+     */
     private void setMenu() {
     	setMenuContentButtons();
     	setMenuSettingsButton();
     	menuButtonsAction();
     }
     
+    /**
+     * Sets the menu content buttons.
+     */
     private void setMenuContentButtons() {
 
 
@@ -113,6 +134,9 @@ public class AppController {
         }
     }
 
+    /**
+     * Sets the menu settings button.
+     */
     private void setMenuSettingsButton() {
     	Button settingsButton = new Button();
         settingsButton.setText("Settings");
@@ -122,6 +146,11 @@ public class AppController {
 
     }
     
+    /**
+     * Load content.
+     *
+     * @param fxmlName the fxml name
+     */
     public void loadContent(String fxmlName) {
         try {
         	URL pathUrl = new URL(AppSettings.INSTANCE.appUrlPath + fxmlName);
@@ -135,6 +164,9 @@ public class AppController {
         }
     }
     
+    /**
+     * Menu buttons action.
+     */
     public void menuButtonsAction() {
     	
     }

@@ -1,7 +1,17 @@
+/*
+ * 
+ */
 package com.myjavafxtemplate.myapp.java.utility;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class AppMemory.
+ */
 public class AppMemory {
 	
+    /**
+     * Prints the memory usage.
+     */
     public static void printMemoryUsage() {
     	System.out.println("//////////////Memory/////////////////");
         // Get the runtime object

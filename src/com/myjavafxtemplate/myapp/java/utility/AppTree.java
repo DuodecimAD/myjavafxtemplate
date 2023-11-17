@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.myjavafxtemplate.myapp.java.utility;
 
 import javafx.scene.Parent;
@@ -5,8 +8,17 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class AppTree.
+ */
 public class AppTree {
 	
+	/**
+	 * Prints the scene.
+	 *
+	 * @param scene the scene
+	 */
 	public static void printScene(Scene scene) {
 		System.out.println("///////////////Tree//////////////////");
         System.out.println("Scene Details:");
@@ -18,6 +30,12 @@ public class AppTree {
         printNode(root, 0);
     }
     
+    /**
+     * Prints the node.
+     *
+     * @param node the node
+     * @param depth the depth
+     */
     private static void printNode(javafx.scene.Node node, int depth) {
         if (node instanceof Parent) {
             Parent parent = (Parent) node;
@@ -39,6 +57,12 @@ public class AppTree {
         }
     }
     
+    /**
+     * Gets the indent.
+     *
+     * @param depth the depth
+     * @return the indent
+     */
     private static String getIndent(int depth) {
         StringBuilder indent = new StringBuilder();
         for (int i = 0; i < depth; i++) {

@@ -1,7 +1,19 @@
+/*
+ * 
+ */
 package com.myjavafxtemplate.myapp.java.utility;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class AppException.
+ */
 public class AppException {
 	
+	/**
+	 * Prints the error.
+	 *
+	 * @param e the e
+	 */
 	public static void printError(Exception e) {
 		System.err.println("Problem : "	+	e.getMessage());
     	System.err.println("Cause : "	+	e.getCause());

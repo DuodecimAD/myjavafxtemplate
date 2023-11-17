@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.myjavafxtemplate.myapp.java.utility;
 
 import java.io.File;
@@ -8,16 +11,29 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class LoggerUtil.
+ */
 public class LoggerUtil {
 	
+	/** The logger. */
 	private static Logger logger = Logger.getLogger(LoggerUtil.class.getName());;
 
+    /**
+     * Gets the logger.
+     *
+     * @return the logger
+     */
     public static Logger getLogger() {
 
         return logger;
     }
 
 	
+    /**
+     * Setup logging.
+     */
     public static void setupLogging() {
     	
     	File logFolder = new File(System.getProperty("user.home") + "/documents/com.myjavafxtemplate.myapp/logs/");

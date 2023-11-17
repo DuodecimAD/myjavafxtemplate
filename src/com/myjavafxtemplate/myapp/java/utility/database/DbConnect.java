@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.myjavafxtemplate.myapp.java.utility.database;
 
 import java.sql.Connection;
@@ -7,10 +10,18 @@ import java.sql.SQLException;
 import com.myjavafxtemplate.myapp.java.utility.AppSettings;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class DbConnect.
+ */
 public class DbConnect {
 	
+	/** The conn. */
 	private static Connection conn;
 	
+	/**
+	 * Instantiates a new db connect.
+	 */
 	private DbConnect() {
 	
 		try {
@@ -33,6 +44,11 @@ public class DbConnect {
 
 	}
 	
+	/**
+	 * Gets the connection.
+	 *
+	 * @return the connection
+	 */
 	private static Connection getConnection() {
         if (conn == null) {
             new DbConnect(); // Initialize the connection if it's not already done
@@ -40,6 +56,11 @@ public class DbConnect {
         return conn;
     }
 
+    /**
+     * Shared connection.
+     *
+     * @return the connection
+     */
     public static Connection sharedConnection() {
         return getConnection();
     }
