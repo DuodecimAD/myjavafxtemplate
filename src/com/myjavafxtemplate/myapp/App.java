@@ -122,7 +122,7 @@ public class App extends Application {
 			
 			primaryStage.setScene(new Scene(root));
 			primaryStage.setTitle(mainFxml);
-			primaryStage.setMinWidth(1000);
+			primaryStage.setMinWidth(1026);
 			primaryStage.setMinHeight(600);
 			/*primaryStage.initStyle(StageStyle.DECORATED);
 			primaryStage.setResizable(false); // Prevent window resizing

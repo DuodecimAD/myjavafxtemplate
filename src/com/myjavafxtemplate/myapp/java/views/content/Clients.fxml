@@ -1,83 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
 <VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.myjavafxtemplate.myapp.java.controllers.ClientController">
    <children>
-      <BorderPane>
-         <left>
-            <TableView id="Table_Client" fx:id="Table_Client" prefHeight="560.0" prefWidth="260.0" BorderPane.alignment="CENTER">
-              <columns>
-                <TableColumn fx:id="Name_Client" editable="false" prefWidth="120.0" text="Name" />
-                <TableColumn fx:id="Surname_Client" editable="false" prefWidth="120.0" text="Surname" />
-              </columns>
-            </TableView>
-         </left>
-         <center>
-            <BorderPane BorderPane.alignment="CENTER">
-               <right>
-                  <Button id="Delete_Client" contentDisplay="CENTER" mnemonicParsing="false" text="Delete Client" BorderPane.alignment="TOP_RIGHT">
-                     <BorderPane.margin>
-                        <Insets right="20.0" top="20.0" />
-                     </BorderPane.margin>
-                  </Button>
-               </right>
+      <StackPane fx:id="ClientBody">
+         <children>
+            <BorderPane>
                <center>
-                  <VBox fillWidth="false" BorderPane.alignment="CENTER">
-                     <children>
-                        <Label text="Name">
-                           <VBox.margin>
-                              <Insets top="20.0" />
-                           </VBox.margin>
-                        </Label>
-                        <TextField id="Name_Client" prefWidth="250.0" />
-                        <Label id="Surname_Client" text="Surname">
-                           <VBox.margin>
-                              <Insets top="20.0" />
-                           </VBox.margin>
-                        </Label>
-                        <TextField prefWidth="250.0" />
-                        <Label id="date_nais_client" text="Birthday">
-                           <VBox.margin>
-                              <Insets top="20.0" />
-                           </VBox.margin>
-                        </Label>
-                        <TextField prefWidth="250.0" />
-                        <Label id="Tel_Client" text="Tel">
-                           <VBox.margin>
-                              <Insets top="20.0" />
-                           </VBox.margin>
-                        </Label>
-                        <TextField prefWidth="250.0" />
-                        <Label id="Email_Client" text="Email">
-                           <VBox.margin>
-                              <Insets top="20.0" />
-                           </VBox.margin>
-                        </Label>
-                        <TextField prefWidth="250.0" />
-                        <Button id="Update_Client" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Update">
-                           <VBox.margin>
-                              <Insets left="90.0" top="50.0" />
-                           </VBox.margin>
-                        </Button>
-                     </children>
-                     <BorderPane.margin>
-                        <Insets />
-                     </BorderPane.margin>
-                     <padding>
-                        <Insets left="50.0" right="50.0" top="20.0" />
-                     </padding>
-                  </VBox>
+                  <TableView id="Table_Client" fx:id="Table_Client" prefHeight="560.0">
+                    <columns>
+                      <TableColumn id="ID" fx:id="ID_Client" editable="false" minWidth="40.0" prefWidth="40.0" text="ID" />
+                      <TableColumn id="Name" fx:id="Name_Client" editable="false" minWidth="100.0" prefWidth="130.0" text="Name" />
+                        <TableColumn id="Surname" fx:id="Surname_Client" editable="false" minWidth="100.0" prefWidth="130.0" text="Surname" />
+                        <TableColumn id="Birthday" fx:id="Birthday_Client" editable="false" minWidth="100.0" prefWidth="120.0" text="Birthday" />
+                        <TableColumn id="Tel" fx:id="Tel_Client" editable="false" minWidth="100.0" prefWidth="120.0" text="Tel" />
+                        <TableColumn id="Email" fx:id="Email_Client" editable="false" minWidth="200.0" prefWidth="250.0" text="Email" />
+                    </columns>
+                  </TableView>
                </center>
+               <top>
+                  <Pane prefHeight="45.0" prefWidth="770.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label layoutX="10.0" layoutY="5.0" text="Search : " />
+                        <TextField layoutX="70.0" prefHeight="25.0" prefWidth="200.0" />
+                     </children>
+                  </Pane>
+               </top>
             </BorderPane>
-         </center>
-      </BorderPane>
+         </children>
+      </StackPane>
    </children>
 </VBox>

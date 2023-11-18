@@ -43,6 +43,9 @@ public enum AppSettings {
     /** The css path. */
     public String cssPath = pathLocation + "ressources/css/";
     
+    /** The image path. */
+    public String imagePath = "/" + pathLocation + "ressources/image/";
+    
     /** The app url path. */
     public URL appUrlPath = AppSettings.class.getClassLoader().getResource(viewsPath);
     

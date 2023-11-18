@@ -88,9 +88,49 @@ TextField, #content Button{
 	/*-fx-padding: 0 0 16 0;*/
 }
 
-#Delete_Client{
+#Delete_Client {
 	-fx-text-fill: #bc0e0e;
 }
 
+#overlayContentPane{
+	-fx-background-color : -secondary;
 
+}
+
+#overlayContentPane VBox{
+	-fx-padding : 20 30 0 30;
+
+}
+
+#overlayContentPane Label{
+
+	-fx-padding: 10 0 0 0;
+    -fx-border-insets: 10 0 0 0;
+
+}
+
+#overlayContentPane HBox{
+	-fx-padding: 30 0 30 300;
+	-fx-border-inset : 0 0 0 300;
+    -fx-spacing: 10px;
+}
+
+#overlayContentPane Button{
+	-fx-min-width: 80px;
+}
+
+#Table_Client{
+	
+	-fx-border-width: 0;
+}
+
+.table-column {
+  -fx-alignment: CENTER-RIGHT;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+    
+}
 

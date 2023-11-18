@@ -19,6 +19,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
@@ -153,6 +154,8 @@ public class AppController {
      */
     public void loadContent(String fxmlName) {
         try {
+        	Label loading = new Label("loading...");
+        	body.setCenter(loading);
         	URL pathUrl = new URL(AppSettings.INSTANCE.appUrlPath + fxmlName);
         	System.out.println("loading "+pathUrl);
             FXMLLoader loader = new FXMLLoader(pathUrl);
