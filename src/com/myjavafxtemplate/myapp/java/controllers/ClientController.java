@@ -63,7 +63,7 @@ public class ClientController {
 		// Fetch data from the database in the background
         new Thread(() -> {
             List<List<String>> fullResult = DbRead.read("CLIENT", "ID_CLIENT");
-            System.out.println(fullResult);
+            //System.out.println(fullResult);
 
             // Update TableView data on the JavaFX Application Thread
             Platform.runLater(() -> updateTableView(fullResult));

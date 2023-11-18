@@ -63,7 +63,7 @@ public class App extends Application {
 			
 	        //AppTree.printScene(primaryStage.getScene());
 	        //AppMemory.printMemoryUsage();
-	        
+			DbConnect.sharedConnection();	        
     	});
 		
 		LoggerUtil.getLogger().info("start method finished");

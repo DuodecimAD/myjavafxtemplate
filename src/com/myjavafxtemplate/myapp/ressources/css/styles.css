@@ -69,7 +69,7 @@
 */
 #content{
 	-fx-background-color: -background;
-	-fx-padding: 20;
+	-fx-padding: 10 20 10 20;
 
 	
 }
