@@ -32,7 +32,7 @@
                      <children>
                         <Label layoutY="5.0" text="Search : " />
                         <TextField layoutX="60.0" prefHeight="25.0" prefWidth="250.0" />
-                        <Button layoutX="646.0" mnemonicParsing="false" text="+ Create a new Client" />
+                        <Button fx:id="createClientButton" layoutX="646.0" mnemonicParsing="false" text="+ Create a new Client" />
                      </children>
                   </Pane>
                </top>

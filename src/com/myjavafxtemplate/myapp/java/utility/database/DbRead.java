@@ -38,7 +38,7 @@ public class DbRead {
 	 * @param sortBy the sort by
 	 * @return the list
 	 */
-	public static List<List<String>> read(String tableName, String sortBy) {
+	public static List<List<Object>> read(String tableName, String sortBy) {
 		tableName = AppSecurity.sanitize(tableName);
 		sortBy = AppSecurity.sanitize(sortBy);
 		
@@ -48,15 +48,15 @@ public class DbRead {
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             ResultSet rs = pstmt.executeQuery();
 
-            List<List<String>> resultList = new ArrayList<>();
+            List<List<Object>> resultList = new ArrayList<>();
             
             ResultSetMetaData metaData = rs.getMetaData();
             int columnCount = metaData.getColumnCount();
 
             while (rs.next()) {
-            	List<String> row = new ArrayList<>();
+            	List<Object> row = new ArrayList<>();
                 for (int i = 1; i <= columnCount; i++) {
-                    row.add(rs.getString(i));
+                    row.add(rs.getObject(i));
                 }
                 resultList.add(row);
             }
@@ -83,7 +83,7 @@ public class DbRead {
 	 * @param valueExist check with this value if it's already exist
 	 * @return the list
 	 */
-	public static List<?> read(String tableName, List<String> dataString, String keyExist, String valueExist) {
+	public static List<Object> read(String tableName, List<String> dataString, String keyExist, String valueExist) {
 		tableName = AppSecurity.sanitize(tableName);
 		dataString = AppSecurity.sanitize(dataString);
 		keyExist = AppSecurity.sanitize(keyExist);
