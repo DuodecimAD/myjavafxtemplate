@@ -64,6 +64,24 @@ public class DbConnect {
     public static Connection sharedConnection() {
         return getConnection();
     }
+    
+    /**
+     * Close the connection.
+     */
+    public static void closeConnection() {
+        try {
+            Connection connection = sharedConnection();
+            if (connection != null && !connection.isClosed()) {
+                connection.close();
+                System.out.println("Connection to Oracle Database has been closed.");
+                conn = null; // Set the connection variable to null after closing
+            } else {
+                System.out.println("Connection is already closed or null.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 	
 
     

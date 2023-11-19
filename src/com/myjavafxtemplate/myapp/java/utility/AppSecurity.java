@@ -54,7 +54,11 @@ public class AppSecurity {
 	 *
 	 * @param input the input
 	 * @return the list
+	 * 
+	 * Tried but chaged my code to an object so this is worthless
+	 * 
 	 */
+
 	public static List<List<String>> sanitizeDouble(List<List<String>> input) {
 
 		    List<List<String>> sanitizedInput = new ArrayList<>();
@@ -71,4 +75,5 @@ public class AppSecurity {
 
 		    return sanitizedInput;
 	}
+
 }

@@ -18,20 +18,19 @@
                <center>
                   <TableView id="Table_Client" fx:id="Table_Client" prefHeight="560.0">
                     <columns>
-                      <TableColumn id="ID" fx:id="ID_Client" editable="false" minWidth="40.0" prefWidth="40.0" text="ID" />
-                      <TableColumn id="Name" fx:id="Name_Client" editable="false" minWidth="100.0" prefWidth="130.0" text="Name" />
-                        <TableColumn id="Surname" fx:id="Surname_Client" editable="false" minWidth="100.0" prefWidth="130.0" text="Surname" />
-                        <TableColumn id="Birthday" fx:id="Birthday_Client" editable="false" minWidth="100.0" prefWidth="120.0" text="Birthday" />
-                        <TableColumn id="Tel" fx:id="Tel_Client" editable="false" minWidth="100.0" prefWidth="120.0" text="Tel" />
-                        <TableColumn id="Email" fx:id="Email_Client" editable="false" minWidth="200.0" prefWidth="250.0" text="Email" />
+                      <TableColumn id="Name" fx:id="Name_Client" editable="false" minWidth="100.0" prefWidth="140.0" text="Name" />
+                        <TableColumn id="Surname" fx:id="Surname_Client" editable="false" minWidth="100.0" prefWidth="140.0" text="Surname" />
+                        <TableColumn id="Date_Nais" fx:id="Date_Nais_Client" editable="false" minWidth="100.0" prefWidth="130.0" text="Date_Nais" />
+                        <TableColumn id="Tel" fx:id="Tel_Client" editable="false" minWidth="100.0" prefWidth="130.0" text="Tel" />
+                        <TableColumn id="Email" fx:id="Email_Client" editable="false" minWidth="200.0" prefWidth="260.0" text="Email" />
                     </columns>
                   </TableView>
                </center>
                <top>
                   <Pane prefHeight="45.0" prefWidth="770.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Label layoutY="5.0" text="Search : " />
-                        <TextField layoutX="60.0" prefHeight="25.0" prefWidth="250.0" />
+                        <Label fx:id="searchLabel" layoutY="5.0" text="Search : " />
+                        <TextField fx:id="searchField" layoutX="60.0" prefHeight="25.0" prefWidth="250.0" />
                         <Button fx:id="createClientButton" layoutX="646.0" mnemonicParsing="false" text="+ Create a new Client" />
                      </children>
                   </Pane>

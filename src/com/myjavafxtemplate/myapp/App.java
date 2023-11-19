@@ -44,6 +44,7 @@ public class App extends Application {
 		
     	launch(args); 
         LoggerUtil.getLogger().info("Main Closing");
+        DbConnect.closeConnection();
     }
 	
     /**
@@ -59,12 +60,16 @@ public class App extends Application {
     	
 		setPrimaryStage(primaryStage);
 		
-		Platform.runLater(() -> {
-			
-	        //AppTree.printScene(primaryStage.getScene());
-	        //AppMemory.printMemoryUsage();
-			DbConnect.sharedConnection();	        
-    	});
+		new Thread(() -> {
+			Platform.runLater(() -> {
+				
+		        //AppTree.printScene(primaryStage.getScene());
+		        //AppMemory.printMemoryUsage();
+				DbConnect.sharedConnection();	        
+	    	});
+        }).start();
+		
+		
 		
 		LoggerUtil.getLogger().info("start method finished");
 		
@@ -72,13 +77,13 @@ public class App extends Application {
 		
 		// dbcreate
 		/*
-		List<List<String>> test = new ArrayList<>(List.of(
-				List.of("NOM_SPEC","PRENOM_SPEC","DATE_NAIS_SPEC", "TEL_SPEC", "EMAIL_SPEC"),
-		        List.of("nomA", "PrenomA", "12/05/2000", "0445789632", "nomAPrenomA@gmail.com"),
-		        List.of("nomB", "PrenomB", "07/02/1987", "0666666666", "nomBPrenomB@gmail.com"),
-		        List.of("nomC", "PrenomC", "22/11/1998", "0777777777", "nomCPrenomC@gmail.com"),
-		        List.of("nomD", "PrenomD", "18/08/2003", "0555555555", "nomDPrenomD@gmail.com"),
-		        List.of("nomE", "PrenomE", "01/12/1978", "0444444444", "nomEPrenomE@gmail.com")
+		List<List<Object>> test = new ArrayList<>(List.of(
+				List.of("ID_SPEC","NOM_SPEC","PRENOM_SPEC","DATE_NAIS_SPEC", "TEL_SPEC", "EMAIL_SPEC"),
+		        List.of("31","nomA", "PrenomA", "12/05/2000", "0445789632", "nomAPrenomA@gmail.com"),
+		        List.of("32","nomB", "PrenomB", "07/02/1987", "0666666666", "nomBPrenomB@gmail.com"),
+		        List.of("33","nomC", "PrenomC", "22/11/1998", "0777777777", "nomCPrenomC@gmail.com"),
+		        List.of("34","nomD", "PrenomD", "18/08/2003", "0555555555", "nomDPrenomD@gmail.com"),
+		        List.of("35","nomE", "PrenomE", "01/12/1978", "0444444444", "nomEPrenomE@gmail.com")
 		));
 		List<Integer> check = List.of(3,4);
 		DbCreate.insert("SPECIALISTE", test, check);

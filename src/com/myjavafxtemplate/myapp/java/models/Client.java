@@ -1,16 +1,19 @@
 package com.myjavafxtemplate.myapp.java.models;
 
-import java.util.Date;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import com.myjavafxtemplate.myapp.java.utility.database.DbCreate;
 import com.myjavafxtemplate.myapp.java.utility.database.DbRead;
 
 public class Client {
 
-	public int ID_CLIENT;
 	public String NOM_CLIENT;
 	public String PRENOM_CLIENT;
-	public Date DATE_NAIS_CLIENT;
+	public LocalDate DATE_NAIS_CLIENT;
 	public String TEL_CLIENT;
 	public String EMAIL_CLIENT;
 	
@@ -18,8 +21,8 @@ public class Client {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Client(int ID_CLIENT, String NOM_CLIENT, String PRENOM_CLIENT, Date DATE_NAIS_CLIENT, String TEL_CLIENT, String EMAIL_CLIENT) {
-		this.ID_CLIENT = ID_CLIENT;
+	public Client(String NOM_CLIENT, String PRENOM_CLIENT, LocalDate DATE_NAIS_CLIENT, String TEL_CLIENT, String EMAIL_CLIENT) {
+
 		this.NOM_CLIENT = NOM_CLIENT;
 		this.PRENOM_CLIENT = PRENOM_CLIENT;
 		this.DATE_NAIS_CLIENT = DATE_NAIS_CLIENT;
@@ -28,16 +31,6 @@ public class Client {
 	}
 	
 	
-
-
-
-	public int getID_CLIENT() {
-		return ID_CLIENT;
-	}
-
-	public void setID_CLIENT(int iD_CLIENT) {
-		ID_CLIENT = iD_CLIENT;
-	}
 
 	public String getNOM_CLIENT() {
 		return NOM_CLIENT;
@@ -55,11 +48,11 @@ public class Client {
 		PRENOM_CLIENT = pRENOM_CLIENT;
 	}
 
-	public Date getDATE_NAIS_CLIENT() {
+	public LocalDate getDATE_NAIS_CLIENT() {
 		return DATE_NAIS_CLIENT;
 	}
 
-	public void setDATE_NAIS_CLIENT(Date dATE_NAIS_CLIENT) {
+	public void setDATE_NAIS_CLIENT(LocalDate dATE_NAIS_CLIENT) {
 		DATE_NAIS_CLIENT = dATE_NAIS_CLIENT;
 	}
 
@@ -82,6 +75,20 @@ public class Client {
 	public static List<List<Object>> getAllClientsData() {
         // Fetch data from the database (using DbRead or any other method)
         // Return raw data as a List<List<?>>
-        return DbRead.read("CLIENT", "ID_CLIENT");
+        return DbRead.read("CLIENT", "NOM_CLIENT");
     }
+	
+	public static void insertIntoDatabase(Client client) {
+
+		List<List<Object>> prepareList = new ArrayList<>(List.of(
+			List.of("NOM_CLIENT", "PRENOM_CLIENT", "DATE_NAIS_CLIENT", "TEL_CLIENT", "EMAIL_CLIENT"),
+	        List.of(client.getNOM_CLIENT(), client.getPRENOM_CLIENT(), client.getDATE_NAIS_CLIENT(), client.getTEL_CLIENT(), client.getEMAIL_CLIENT())
+		));
+		
+		
+		List<Integer> check = List.of(3,4);
+
+        DbCreate.insert("CLIENT", prepareList, check); 
+    }
+	
 }

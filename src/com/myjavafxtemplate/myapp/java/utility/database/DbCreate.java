@@ -35,9 +35,9 @@ public class DbCreate {
 	 * @param dataString the data string LIST 1st line = columns, other lines = data
 	 * @param checkPositions the check positions LIST
 	 */
-	public static void insert(String tableName, List<List<String>> dataString, List<Integer> checkPositions) {
+	public static void insert(String tableName, List<List<Object>> dataString, List<Integer> checkPositions) {
 		tableName = AppSecurity.sanitize(tableName);
-		dataString = AppSecurity.sanitizeDouble(dataString);
+		//dataString = AppSecurity.sanitizeDouble(dataString);
 		
    	 	String columns = "";
    	 	String values = "";
@@ -55,7 +55,7 @@ public class DbCreate {
    	 
    	 	String sqlInsert = "INSERT INTO "+ tableName +"("+ columns +") VALUES("+ values +")";
    	 	String checkIfExists = "SELECT COUNT(*) AS count FROM " + tableName + " WHERE ";
-
+System.out.println(sqlInsert);
    	    for (int position : checkPositions) {
    	        checkIfExists += dataString.get(0).get(position) + " = ? OR ";
    	    }
@@ -77,19 +77,20 @@ public class DbCreate {
                  
               // Move the cursor to the first row (if any)
                  if (rs.next()) {
-                 int count = rs.getInt("count");
-                 
-                 if (count == 0) {
-                     // Set the parameters based on the dataString list
-                     for (int j = 0; j < dataString.get(i).size(); j++) {
-                         pstmtInsert.setObject(j + 1, dataString.get(i).get(j));
-                     }
+	                 int count = rs.getInt("count");
+	                 
+	                 if (count == 0) {
+	                     // Set the parameters based on the dataString list
+	                     for (int j = 0; j < dataString.get(i).size(); j++) {
+	                         pstmtInsert.setObject(j + 1, dataString.get(i).get(j));
+	                         System.out.println(dataString.get(i).get(j));
+	                     }
 
-                     pstmtInsert.executeUpdate();
-                     System.out.println(dataString.get(i) + " was inserted successfully!");
-                 } else {
-                     System.out.println(dataString.get(i) + " already exists");
-                 }
+	                     pstmtInsert.executeUpdate();
+	                     System.out.println(dataString.get(i) + " was inserted successfully!");
+	                 } else {
+	                     System.out.println(dataString.get(i) + " already exists");
+	                 }
                  }
              }
        } catch (SQLException e) {
