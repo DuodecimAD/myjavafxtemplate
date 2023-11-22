@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="com.myjavafxtemplate.myapp.java.controllers.ChallengeController">
+    <Label text="Challenge accepted" />
+   <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #b4b4b4;" fx:id="ChallengeA">
+
+   </Pane>
+   <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #33c5c5;" fx:id="ChallengeB">
+      
+   </Pane>
+</VBox>

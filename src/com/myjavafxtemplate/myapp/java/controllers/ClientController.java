@@ -330,10 +330,12 @@ public class ClientController {
 	 */
 	
 	private void filterTable() {
+		FilteredList<Client> filteredData = new FilteredList<>(clientsObsList, p -> true);
+		
 		// Add listener to the searchField text property
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
             // Create a filtered list to apply the search
-            FilteredList<Client> filteredData = new FilteredList<>(getAllClients(), p -> true);
+            
 
             // Set the predicate for the filter
             filteredData.setPredicate(client -> {
