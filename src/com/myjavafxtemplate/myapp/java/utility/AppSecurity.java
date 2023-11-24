@@ -49,31 +49,4 @@ public class AppSecurity {
 	}
 	
 	
-	/**
-	 * Sanitize double.
-	 *
-	 * @param input the input
-	 * @return the list
-	 * 
-	 * Tried but chaged my code to an object so this is worthless
-	 * 
-	 */
-
-	public static List<List<String>> sanitizeDouble(List<List<String>> input) {
-
-		    List<List<String>> sanitizedInput = new ArrayList<>();
-
-		    // Remove non-alphanumeric characters from each string
-		    for (List<String> innerList : input) {
-		        List<String> sanitizedList = new ArrayList<>();
-		        for (String str : innerList) {
-		            String sanitizedString = str.replaceAll("[^a-zA-Z0-9_./@]", "");
-		            sanitizedList.add(sanitizedString);
-		        }
-		        sanitizedInput.add(sanitizedList);
-		    }
-
-		    return sanitizedInput;
-	}
-
 }

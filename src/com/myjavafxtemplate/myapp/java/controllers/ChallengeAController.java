@@ -15,7 +15,6 @@ public class ChallengeAController {
     private Label LabelA;
 
 
-	
 	public ChallengeAController() {
 		
 	}

@@ -1,6 +1,7 @@
 package com.myjavafxtemplate.myapp.java.controllers;
 
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -80,11 +81,10 @@ public class ClientController {
         
 	}
 	
-	
 	private ObservableList<Client> getAllClients() {
+		
 	    // Get raw data from the Client model
 	    List<List<Object>> rawClientData = Client.getAllClientsData();
-
 
 	    for (List<Object> row : rawClientData) {
 	    	BigDecimal idBigDecimal = (BigDecimal) row.get(0);
@@ -102,15 +102,6 @@ public class ClientController {
 	    return clientsObsList;
 	}
 	
-	/*
-	 * could have replaced previous method with this but then need to use observable list 
-	 * which is javafx into the model which is better not to, but left as reference
-	 *
-	 * 	private ObservableList<Client> getAllClients() {
-	 * 		return FXCollections.observableArrayList(Client.getAllClientsData());
-	 *	}
-	 *
-	 */
 	
 	private void loadingTableIcon() {
 		// Load the loading GIF
@@ -300,14 +291,14 @@ public class ClientController {
 	private void createNewClient(String nameField, String SurnameField, LocalDate date_naisField, String telField, String emailField) {
 
 		Client newClient = new Client(nameField, SurnameField, date_naisField, telField, emailField);
-		System.out.println(newClient.toString() + " created");
-		getClientsObsList().add(newClient);
 
 		try {
 			Client.insertIntoDatabase(newClient);
 			System.out.println(newClient.toString() + " added to database without problem");
-		} catch (Exception e) {
-			System.out.println("this tel or email already exist");
+			getClientsObsList().add(newClient);
+		} catch (SQLException e) {
+			
+			
 		}
 	}
 	

@@ -12,8 +12,7 @@ public class ChallengeBController {
     private Label LabelB;
 
     public ChallengeBController() {
+    	
     }
 
-
-	
 }

@@ -27,47 +27,27 @@ public class ChallengeController {
 	
 	
 	public void initialize() {
-		
 
 		try {
-			URL pathUrl = new URL(AppSettings.INSTANCE.appUrlPath + "content/ChallengeA.fxml");
+			URL pathUrl = new URL(AppSettings.INSTANCE.appUrlPath + "challenge/ChallengeA.fxml");
 			FXMLLoader loader = new FXMLLoader(pathUrl);
-			try {
-				VBox vboxA = loader.load();
-				vboxA.setId("vboxA");
-		        ChallengeA.getChildren().add(vboxA);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
+			VBox vboxA = loader.load();
+			vboxA.setId("vboxA");
+		    ChallengeA.getChildren().add(vboxA);
+		} catch (IOException e) {
 				e.printStackTrace();
-			}
-	        
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		
 		try {
-			URL pathUrl = new URL(AppSettings.INSTANCE.appUrlPath + "content/ChallengeB.fxml");
+			URL pathUrl = new URL(AppSettings.INSTANCE.appUrlPath + "challenge/ChallengeB.fxml");
 			FXMLLoader loader = new FXMLLoader(pathUrl);
-			try {
-				VBox vboxB = loader.load();
-				vboxB.setId("vboxA");
-		        ChallengeB.getChildren().add(vboxB);
-
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-	        
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
+			VBox vboxB = loader.load();
+			vboxB.setId("vboxA");
+	        ChallengeB.getChildren().add(vboxB);
+ 
+		} catch (IOException e) {
 			e.printStackTrace();
-		}
-		        
+		}  
         
 	}
-	
-	
-	
-
 }

@@ -30,24 +30,26 @@ public class DbCreate {
 	
 	/**
 	 * Insert.
-	 *
 	 * @param tableName the table name
-	 * @param dataString the data string LIST 1st line = columns, other lines = data
+	 * @param List of columns names - Strings
+	 * @param List of values - any Type
 	 * @param checkPositions the check positions LIST
+	 * @return 
+	 * @throws SQLException 
 	 */
-	public static void insert(String tableName, List<List<Object>> dataString, List<Integer> checkPositions) {
+	public static void insert(String tableName, List<String> columnsList, List<Object> valuesList, List<Integer> checkPositions) throws SQLException {
 		tableName = AppSecurity.sanitize(tableName);
-		//dataString = AppSecurity.sanitizeDouble(dataString);
+		columnsList = AppSecurity.sanitize(columnsList);
 		
    	 	String columns = "";
    	 	String values = "";
 
-   	 	for (int i = 0; i < dataString.get(0).size(); i++) {
+   	 	for (int i = 0; i < columnsList.size(); i++) {
    		 
-			columns += dataString.get(0).get(i);
+			columns += columnsList.get(i);
 			values += "?";
 
-			if (i < dataString.get(0).size() - 1) {
+			if (i < columnsList.size() - 1) {
 	            columns += ", ";
 	            values += ", ";
 	        }
@@ -55,9 +57,9 @@ public class DbCreate {
    	 
    	 	String sqlInsert = "INSERT INTO "+ tableName +"("+ columns +") VALUES("+ values +")";
    	 	String checkIfExists = "SELECT COUNT(*) AS count FROM " + tableName + " WHERE ";
-System.out.println(sqlInsert);
+
    	    for (int position : checkPositions) {
-   	        checkIfExists += dataString.get(0).get(position) + " = ? OR ";
+   	        checkIfExists += columnsList.get(position) + " = ? OR ";
    	    }
 
    	    // Remove the trailing "OR" from the WHERE clause
@@ -66,35 +68,35 @@ System.out.println(sqlInsert);
        try (PreparedStatement pstmtCheck = conn.prepareStatement(checkIfExists);
             PreparedStatement pstmtInsert = conn.prepareStatement(sqlInsert)) {
 
-            // Set the parameters based on the dataString list
-       	  for (int i = 1; i < dataString.size(); i++) {
-                 // Set parameters for the WHERE clause based on checkPositions
-                 for (int j = 0; j < checkPositions.size(); j++) {
-                     pstmtCheck.setString(j + 1, (String) dataString.get(i).get(checkPositions.get(j)));
-                 }
 
-                 ResultSet rs = pstmtCheck.executeQuery();
-                 
-              // Move the cursor to the first row (if any)
-                 if (rs.next()) {
-	                 int count = rs.getInt("count");
-	                 
-	                 if (count == 0) {
-	                     // Set the parameters based on the dataString list
-	                     for (int j = 0; j < dataString.get(i).size(); j++) {
-	                         pstmtInsert.setObject(j + 1, dataString.get(i).get(j));
-	                         System.out.println(dataString.get(i).get(j));
-	                     }
+	         // Set parameters for the WHERE clause based on checkPositions
+	         for (int j = 0; j < checkPositions.size(); j++) {
+	             pstmtCheck.setString(j + 1, (String) valuesList.get(checkPositions.get(j)));
+	         }
+	
+	         ResultSet rs = pstmtCheck.executeQuery();
+	         
 
-	                     pstmtInsert.executeUpdate();
-	                     System.out.println(dataString.get(i) + " was inserted successfully!");
-	                 } else {
-	                     System.out.println(dataString.get(i) + " already exists");
+	         if (rs.next()) {
+	             int count = rs.getInt("count");
+	             
+	             if (count == 0) {
+	                 // Set the parameters based on the dataString list
+	                 for (int j = 0; j < valuesList.size(); j++) {
+	                     pstmtInsert.setObject(j + 1, valuesList.get(j));
 	                 }
-                 }
-             }
+	
+	                 pstmtInsert.executeUpdate();
+	                 System.out.println(valuesList + " was inserted successfully!");
+	             } else {
+	                 throw new SQLException("tel or email already exists");
+	             }
+	         }
+             
        } catch (SQLException e) {
            System.out.println(e.getMessage());
+           throw e;
        }
+	
    }
 }

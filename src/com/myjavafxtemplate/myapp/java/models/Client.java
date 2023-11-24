@@ -1,6 +1,7 @@
 package com.myjavafxtemplate.myapp.java.models;
 
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -78,17 +79,17 @@ public class Client {
         return DbRead.read("CLIENT", "NOM_CLIENT");
     }
 	
-	public static void insertIntoDatabase(Client client) {
+	public static void insertIntoDatabase(Client client) throws SQLException {
 
-		List<List<Object>> prepareList = new ArrayList<>(List.of(
-			List.of("NOM_CLIENT", "PRENOM_CLIENT", "DATE_NAIS_CLIENT", "TEL_CLIENT", "EMAIL_CLIENT"),
-	        List.of(client.getNOM_CLIENT(), client.getPRENOM_CLIENT(), client.getDATE_NAIS_CLIENT(), client.getTEL_CLIENT(), client.getEMAIL_CLIENT())
-		));
-		
-		
+		List<String> columnsList = new ArrayList<>(List.of("NOM_CLIENT", "PRENOM_CLIENT", "DATE_NAIS_CLIENT", "TEL_CLIENT", "EMAIL_CLIENT"));
+		List<Object> valuesList =  new ArrayList<>(List.of(client.getNOM_CLIENT(), client.getPRENOM_CLIENT(), client.getDATE_NAIS_CLIENT(), client.getTEL_CLIENT(), client.getEMAIL_CLIENT()));
 		List<Integer> check = List.of(3,4);
 
-        DbCreate.insert("CLIENT", prepareList, check); 
+        try {
+			DbCreate.insert("CLIENT", columnsList, valuesList, check);
+		} catch (SQLException e) {
+			throw e;
+		} 
     }
 	
 }
