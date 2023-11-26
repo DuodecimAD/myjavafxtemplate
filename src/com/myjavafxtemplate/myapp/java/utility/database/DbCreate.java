@@ -3,6 +3,7 @@
  */
 package com.myjavafxtemplate.myapp.java.utility.database;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,6 +29,70 @@ public class DbCreate {
 	    
 	}
 	
+	
+	public static void insert(String tableName, List<String> columnsList, List<Object> valuesList, List<Integer> checkPositions) throws SQLException {
+		tableName = AppSecurity.sanitize(tableName);
+		columnsList = AppSecurity.sanitize(columnsList);
+		
+   	 	String columns = "";
+   	 	String values = "";
+   	 	int columnsLength = 0;
+
+   	 	for (int i = 0; i < columnsList.size(); i++) {
+   		 
+			columns += columnsList.get(i);
+			values += valuesList.get(i).toString();
+			columnsLength++;
+
+			if (i < columnsList.size() - 1) {
+	            columns += ", ";
+	            values += ", ";
+	        }
+		}
+   	 	
+   	 	String checkIfExist = "";
+   	 	for (int i = 0; i < checkPositions.size(); i++) {
+   	 		
+   	 		checkIfExist += checkPositions.get(i).toString();
+   	 		
+	   	 	if (i < checkPositions.size() - 1) {
+	   	 		checkIfExist += ", ";
+
+	        }
+   	 	}
+   	/* 	
+   	 	System.out.println("table Name : " + tableName);
+	   	System.out.println("columns Name : " + columns);
+	   	System.out.println("columns length : " + columnsLength);
+	   	System.out.println("values : " + values);
+	   	System.out.println("checkIfExist : " + checkIfExist);
+*/
+   	 	
+   	 	String call = "{call InsertIfNotExists(?, ?, ?, ?, ?)}";
+   	 	
+
+       try (CallableStatement callableStatement = conn.prepareCall(call)) {
+
+
+    	// Set parameter values
+           callableStatement.setString(1, tableName);
+           callableStatement.setString(2, columns);
+           callableStatement.setInt(3, columnsLength);
+           callableStatement.setString(4, values);
+           callableStatement.setString(5, checkIfExist);
+
+           // Execute the stored procedure
+           callableStatement.execute();
+           
+           System.out.println(valuesList + " was inserted successfully!");
+  
+       } catch (SQLException e) {
+    	   
+           throw e;
+       }
+	
+   }
+	
 	/**
 	 * Insert.
 	 * @param tableName the table name
@@ -37,7 +102,7 @@ public class DbCreate {
 	 * @return 
 	 * @throws SQLException 
 	 */
-	public static void insert(String tableName, List<String> columnsList, List<Object> valuesList, List<Integer> checkPositions) throws SQLException {
+	/*public static void insert(String tableName, List<String> columnsList, List<Object> valuesList, List<Integer> checkPositions) throws SQLException {
 		tableName = AppSecurity.sanitize(tableName);
 		columnsList = AppSecurity.sanitize(columnsList);
 		
@@ -98,5 +163,5 @@ public class DbCreate {
            throw e;
        }
 	
-   }
+   }*/
 }

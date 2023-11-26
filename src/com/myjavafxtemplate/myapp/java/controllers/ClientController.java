@@ -264,20 +264,31 @@ public class ClientController {
         Label emailLabel = new Label("Email");
         TextField emailField = new TextField();
         
+        Label errorLabel = new Label("");
+        errorLabel.setId("errorLabelnewClient");
+        
         VBox overLayContent = new VBox();
         overLayContent.setId("overLayContent");
-        overLayContent.getChildren().addAll(nameLabel, nameField, surnameLabel, surnameField, date_naisLabel, date_naisField, telLabel, telField, emailLabel, emailField);
+        overLayContent.getChildren().addAll(nameLabel, nameField, surnameLabel, surnameField, date_naisLabel, date_naisField, telLabel, telField, emailLabel, emailField, errorLabel);
         
         Button buttonOk = new Button("ok");
+        buttonOk.setOnAction(e -> {
+        	String newClientOK = createNewClient(nameField.getText(), surnameField.getText(), date_naisField.getValue(), telField.getText(), emailField.getText());
+        	
+        	if(newClientOK == "") {
+        		closeOverlay(ClientBody);
+        	}else {
+        		errorLabel.setText(newClientOK);
+        	}
+        	
+        });
+        
         Button buttonCancel = new Button("Cancel");
         buttonCancel.setOnAction(e -> {
         	closeOverlay(ClientBody);
         });
         
-        buttonOk.setOnAction(e -> {
-        	createNewClient(nameField.getText(), surnameField.getText(), date_naisField.getValue(), telField.getText(), emailField.getText());
-        	closeOverlay(ClientBody);
-        });
+        
 
         
         HBox overlayBottomButtons = new HBox();
@@ -288,7 +299,7 @@ public class ClientController {
        contentPane.setBottom(overlayBottomButtons);
 	}
 	
-	private void createNewClient(String nameField, String SurnameField, LocalDate date_naisField, String telField, String emailField) {
+	private String createNewClient(String nameField, String SurnameField, LocalDate date_naisField, String telField, String emailField) {
 
 		Client newClient = new Client(nameField, SurnameField, date_naisField, telField, emailField);
 
@@ -297,9 +308,28 @@ public class ClientController {
 			System.out.println(newClient.toString() + " added to database without problem");
 			getClientsObsList().add(newClient);
 		} catch (SQLException e) {
-			
+			String errorMessage = e.getMessage();
+	           int startIndex = errorMessage.indexOf("ORA-20001: ");
+	           if (startIndex != -1) {
+	               // Extract the substring from the index to the end of the line
+	               int endIndex = errorMessage.indexOf('\n', startIndex);
+	               String cleanErrorMessage;
+	               if (endIndex != -1) {
+	            	   cleanErrorMessage = errorMessage.substring(startIndex + "ORA-20001: ".length(), endIndex).trim();
+	                   System.out.println(cleanErrorMessage);
+	                   return cleanErrorMessage;
+	               } else {
+	            	   cleanErrorMessage = errorMessage.substring(startIndex + "ORA-20001: ".length()).trim();
+	                   System.out.println(cleanErrorMessage);
+	                   return cleanErrorMessage;
+	               }
+	           } else {
+	               System.out.println(errorMessage);
+	               return errorMessage;
+	           }
 			
 		}
+		return "";
 	}
 	
 	public ObservableList<Client> getClientsObsList() {

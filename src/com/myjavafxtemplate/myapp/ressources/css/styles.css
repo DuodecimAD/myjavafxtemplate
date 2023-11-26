@@ -7,6 +7,7 @@
 	-primary: rgb(36, 67, 121);
     -secondary: rgb(29, 45, 65);
     -accent: rgb(100, 167, 255);
+    -error: rgb(219, 59, 59);
     
     -fx-font-size: 16px;
     
@@ -172,7 +173,7 @@ TextField, #content Button{
 }
 
 #overlayContentPane #overlayBottomButtons{
-	-fx-padding: 30 0 20 290;
+	-fx-padding: 35 0 20 290;
 
     -fx-spacing: 20px;
 }
@@ -195,9 +196,15 @@ TextField, #content Button{
 
 #overlayContentPane #overlayTopDelete Button{
 	-fx-min-width: 80px;
-	-fx-text-fill : red;
+	-fx-text-fill : -error;
 }
 
 #Delete_Client {
-	-fx-text-fill: #bc0e0e;
+
+}
+
+#errorLabelnewClient{
+	-fx-text-fill: -error;
+	-fx-padding : 30 0 -10 0;
+
 }
