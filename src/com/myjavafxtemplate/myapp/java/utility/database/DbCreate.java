@@ -30,7 +30,7 @@ public class DbCreate {
 	}
 	
 	
-	public static void insert(String tableName, List<String> columnsList, List<Object> valuesList, List<Integer> checkPositions) throws SQLException {
+	public static void insert(String tableName, List<String> columnsList, List<Object> valuesList) throws SQLException {
 		tableName = AppSecurity.sanitize(tableName);
 		columnsList = AppSecurity.sanitize(columnsList);
 		
@@ -50,16 +50,8 @@ public class DbCreate {
 	        }
 		}
    	 	
-   	 	String checkIfExist = "";
-   	 	for (int i = 0; i < checkPositions.size(); i++) {
-   	 		
-   	 		checkIfExist += checkPositions.get(i).toString();
-   	 		
-	   	 	if (i < checkPositions.size() - 1) {
-	   	 		checkIfExist += ", ";
-
-	        }
-   	 	}
+   	 	
+   	 	
    	/* 	
    	 	System.out.println("table Name : " + tableName);
 	   	System.out.println("columns Name : " + columns);
@@ -68,7 +60,7 @@ public class DbCreate {
 	   	System.out.println("checkIfExist : " + checkIfExist);
 */
    	 	
-   	 	String call = "{call InsertIfNotExists(?, ?, ?, ?, ?)}";
+   	 	String call = "{call InsertIfNotExists(?, ?, ?, ?)}";
    	 	
 
        try (CallableStatement callableStatement = conn.prepareCall(call)) {
@@ -79,7 +71,7 @@ public class DbCreate {
            callableStatement.setString(2, columns);
            callableStatement.setInt(3, columnsLength);
            callableStatement.setString(4, values);
-           callableStatement.setString(5, checkIfExist);
+
 
            // Execute the stored procedure
            callableStatement.execute();

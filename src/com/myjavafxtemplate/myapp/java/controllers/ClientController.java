@@ -105,7 +105,7 @@ public class ClientController {
 	
 	private void loadingTableIcon() {
 		// Load the loading GIF
-        Image loadingImage = new Image(getClass().getResourceAsStream(AppSettings.INSTANCE.imagePath+"loading.gif"));
+        Image loadingImage = new Image(getClass().getResourceAsStream(AppSettings.INSTANCE.ressourcesPath+"images/loading.gif"));
         ImageView loadingImageView = new ImageView(loadingImage);
 
         // Set the loading GIF as the custom placeholder

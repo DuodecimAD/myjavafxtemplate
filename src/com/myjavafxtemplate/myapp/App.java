@@ -22,6 +22,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 
@@ -122,11 +123,12 @@ public class App extends Application {
 			LoggerUtil.getLogger().info("initialize will be called now");
 			Parent root = loader.load();
 			LoggerUtil.getLogger().info("fxml loaded");
-			root.getStylesheets().add(AppSettings.INSTANCE.cssPath+"styles.css");
+			root.getStylesheets().add(AppSettings.INSTANCE.ressourcesPath+"css/styles.css");
 			LoggerUtil.getLogger().info("css loaded");
-			
+			// icon root access by Alexiuz As on IconScout
+			primaryStage.getIcons().add(new Image(getClass().getResourceAsStream(AppSettings.INSTANCE.ressourcesPath+"images/icon.png")));
 			primaryStage.setScene(new Scene(root));
-			primaryStage.setTitle(mainFxml);
+			primaryStage.setTitle("My JavaFX Template");
 			primaryStage.setMinWidth(1026);
 			primaryStage.setMinHeight(600);
 			/*primaryStage.initStyle(StageStyle.DECORATED);

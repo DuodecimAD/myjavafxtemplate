@@ -83,10 +83,9 @@ public class Client {
 
 		List<String> columnsList = new ArrayList<>(List.of("NOM_CLIENT", "PRENOM_CLIENT", "DATE_NAIS_CLIENT", "TEL_CLIENT", "EMAIL_CLIENT"));
 		List<Object> valuesList =  new ArrayList<>(List.of(client.getNOM_CLIENT(), client.getPRENOM_CLIENT(), client.getDATE_NAIS_CLIENT(), client.getTEL_CLIENT(), client.getEMAIL_CLIENT()));
-		List<Integer> check = List.of(3,4);
 
         try {
-			DbCreate.insert("CLIENT", columnsList, valuesList, check);
+			DbCreate.insert("CLIENT", columnsList, valuesList);
 		} catch (SQLException e) {
 			throw e;
 		} 
