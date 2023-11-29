@@ -33,7 +33,6 @@ import javafx.scene.layout.VBox;
 
 public class ClientController {
 	
-	
 	private ObservableList<Client> clientsObsList = FXCollections.observableArrayList();
 	/** The body. */
     @FXML 
@@ -63,6 +62,7 @@ public class ClientController {
 	public void initialize() {
 		
 		loadingTableIcon();
+		
 
 		// Fetch data from the database in the background
         new Thread(() -> {
@@ -105,7 +105,7 @@ public class ClientController {
 	
 	private void loadingTableIcon() {
 		// Load the loading GIF
-        Image loadingImage = new Image(getClass().getResourceAsStream(AppSettings.INSTANCE.ressourcesPath+"images/loading.gif"));
+        Image loadingImage = new Image(getClass().getResourceAsStream(AppSettings.INSTANCE.imagesPath+"loading.gif"));
         ImageView loadingImageView = new ImageView(loadingImage);
 
         // Set the loading GIF as the custom placeholder
@@ -384,6 +384,19 @@ public class ClientController {
 
             // Set the items in the TableView with the filtered and sorted data
             Table_Client.setItems(sortedData);
+            
+            // Display a message when there are no items in the table
+            if (sortedData.isEmpty()) {
+                // Set a message in the TableView or somewhere appropriate
+                // For example, assuming you have a label to display messages:
+            	Table_Client.setPlaceholder(new Label("Try something else, nothing left to see here !!!"));
+            }
+        });
+        
+        // Add event handler to clear the searchField when clicked
+        searchField.setOnMouseClicked(event -> {
+            // Clear the searchField text
+            searchField.clear();
         });
 	}
 }

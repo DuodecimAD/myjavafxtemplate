@@ -38,7 +38,7 @@
 	-fx-spacing: 2px;
 }
 
-#menuPane .button:hover, #menuPane .button:focused:hover {
+#menuPane .button:hover {
     -fx-effect: innershadow(three-pass-box, rgba(200,200,200,0.2), 15, 0, 0, 0);
     /*-fx-background-color: -primary;*/
     /*-fx-text-fill: -secondary;*/
@@ -46,16 +46,15 @@
      -fx-padding: 0 0 0 8px;
 }
 
-#menuPane .button:focused:hover{
+#menuPane #activeMenuButton:hover{
 	-fx-padding: 0;
 	-fx-effect: none;
 }
 
-#menuPane .button:focused {
+#menuPane .button:focused, #menuPane #activeMenuButton {
 	-fx-background-color: -background;
-	
-
 }
+
 /*
 #menuPane .button:pressed {
     

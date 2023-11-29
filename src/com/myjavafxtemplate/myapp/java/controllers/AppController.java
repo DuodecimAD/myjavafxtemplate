@@ -12,12 +12,16 @@ import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
@@ -37,6 +41,8 @@ public class AppController {
 
     /** The buttons menu. */
     static List<Button> buttonsMenu = new ArrayList<Button>(); 
+    
+    private static Map<String, CachedFXML> fxmlCache = new HashMap<>();
 
     /**
      * Initialize.
@@ -82,7 +88,10 @@ public class AppController {
             for (File file : files) {
                 Button button = new Button(file.getName().substring(0, file.getName().lastIndexOf(".")));
                 
-                button.setOnAction(event -> loadContent("content/"+file.getName()));
+                button.setOnAction(event -> {
+                	loadContent(file.getName());
+                	updateActiveState(buttonsMenu, button);
+                });
                 
                 buttonsMenu.add(button);
             }
@@ -112,7 +121,10 @@ public class AppController {
         	            System.out.println(fileName);
         	            Button button = new Button(fileName);
                         
-                        button.setOnAction(event -> loadContent("content/"+fileName+".fxml"));
+        	            button.setOnAction(event -> {
+                        	loadContent(fileName + ".fxml");
+                        	updateActiveState(buttonsMenu, button);
+                        });
                         
                         buttonsMenu.add(button);
 
@@ -134,6 +146,18 @@ public class AppController {
         	
         }
     }
+    
+    private void updateActiveState(List<Button> buttons, Button activeButton) {
+        buttons.forEach(button -> setActiveButtonStyle(button, button == activeButton));
+    }
+
+    private void setActiveButtonStyle(Button button, boolean isActive) {
+        if (isActive) {
+            button.setId("activeMenuButton");
+        } else {
+            button.setId(null); // Remove the ID
+        }
+    }
 
     /**
      * Sets the menu settings button.
@@ -142,9 +166,13 @@ public class AppController {
     	Button settingsButton = new Button();
         settingsButton.setText("Settings");
         settingsButton.setId("settingsButton");
-        settingsButton.setOnAction(event -> loadContent("Settings.fxml"));
+        settingsButton.setOnAction(event -> {
+        	loadContent("Settings.fxml");
+        	updateActiveState(buttonsMenu, settingsButton);
+        });
         menuPane.setBottom(settingsButton);
-
+        buttonsMenu.add(settingsButton);
+        
     }
     
     /**
@@ -154,18 +182,36 @@ public class AppController {
      */
     public void loadContent(String fxmlName) {
         try {
-        	Label loading = new Label("loading...");
-        	body.setCenter(loading);
-        	URL pathUrl = new URL(AppSettings.INSTANCE.appUrlPath + fxmlName);
-        	System.out.println("loading "+pathUrl);
-            FXMLLoader loader = new FXMLLoader(pathUrl);
-            VBox content = loader.load();
-            content.setId("content");
-            body.setCenter(content);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+            Label loading = new Label("loading...");
+            body.setCenter(loading);
+
+            // Check if the FXML content is already cached
+            if (fxmlCache.containsKey(fxmlName)) {
+                CachedFXML cachedFXML = fxmlCache.get(fxmlName);
+                body.setCenter(cachedFXML.getContent());
+            } else {
+            	URL pathUrl;
+            	if(fxmlName != "Settings.fxml") {
+            		pathUrl = new URL(AppSettings.INSTANCE.appUrlPath +"content/" + fxmlName);
+            	}else {
+            		pathUrl = new URL(AppSettings.INSTANCE.appUrlPath + fxmlName);
+            	}
+            	   
+            	 FXMLLoader loader = new FXMLLoader(pathUrl);
+                 Node content = loader.load();
+                 Object controller = loader.getController();
+
+                 // Cache the FXML content and its controller
+                 fxmlCache.put(fxmlName, new CachedFXML(content, controller));
+
+                 content.setId("content");
+                 body.setCenter(content);
+             }
+         } catch (Exception e) {
+             e.printStackTrace();
+         }
+     }
+
     
     /**
      * Menu buttons action.
@@ -174,4 +220,21 @@ public class AppController {
     	
     }
     
+    public class CachedFXML {
+        private final Node content;
+        private final Object controller;
+
+        public CachedFXML(Node content, Object controller) {
+            this.content = content;
+            this.controller = controller;
+        }
+
+        public Node getContent() {
+            return content;
+        }
+
+        public Object getController() {
+            return controller;
+        }
+    }
 }

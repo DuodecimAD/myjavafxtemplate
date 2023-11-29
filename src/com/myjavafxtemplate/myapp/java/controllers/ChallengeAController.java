@@ -1,7 +1,5 @@
 package com.myjavafxtemplate.myapp.java.controllers;
 
-import com.myjavafxtemplate.myapp.java.utility.AppTree;
-
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -23,7 +21,7 @@ public class ChallengeAController {
     public void initialize() {
 
 		ButtonAzerty.setOnMouseClicked(event -> {
-			AppTree.printScene(ButtonAzerty.getScene());
+
 			 
 	        // Get the root of the current controller's scene
 	        Parent root = ButtonAzerty.getScene().getRoot();

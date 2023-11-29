@@ -31,6 +31,8 @@ public enum AppSettings {
 /////////////// PATHS /////////////////////
 ///////////////////////////////////////////
 	
+	
+	
 	/** The path location. */
 	public String pathLocation = "com/myjavafxtemplate/myapp/";
     
@@ -41,11 +43,16 @@ public enum AppSettings {
     public String contentPath = pathLocation + "java/views/content/";
     
     /** The css path. */
-    public String ressourcesPath = "/" + pathLocation + "ressources/";
-
+    public String cssPath = "/" + pathLocation + "ressources/css/";
+    
+    /** The images path. */
+    public String imagesPath = "/" + pathLocation + "ressources/images/";
     
     /** The app url path. */
     public URL appUrlPath = AppSettings.class.getClassLoader().getResource(viewsPath);
+    
+    /** The Main path. */
+	public String appMainPath = appUrlPath + "App";
     
     /** The app full path. */
     public String appFullPath = appUrlPath.getPath().replaceFirst("^/(.:/)", "$1");
