@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.function.Consumer;
 import com.myjavafxtemplate.myapp.java.models.Client;
 import com.myjavafxtemplate.myapp.java.utility.AppSettings;
@@ -57,51 +59,76 @@ public class ClientController {
 	
 	public ClientController() {
 		
+		
 	}
 	
 	public void initialize() {
 		
 		loadingTableIcon();
 		
-
-		// Fetch data from the database in the background
         new Thread(() -> {
-            Platform.runLater(() -> updateTableView(getAllClients()));
+        	 Platform.runLater(() -> {
+			 	getAllClients();
+			 	updateTableView();
+			 	filterTable();
+			 });
         }).start();
-        
-        filterTable();
-		
         
         // When data's row is clicked, open overlay with data from that row
         openOverlayPopulateData();
         
         // Create a new Client
         openOverlayNewClient();
-        
-        
+ 
 	}
 	
 	private ObservableList<Client> getAllClients() {
 		
 	    // Get raw data from the Client model
-	    List<List<Object>> rawClientData = Client.getAllClientsData();
+		List<List<Object>> rawClientData = null;
+		 Label placeholderLabel = new Label(); // Create label outside of the timer
+		 
+		try {
+			rawClientData = Client.getAllClientsData();
+		} catch (Exception e) {
+			final int[] seconds = {30}; // Initial countdown value
 
-	    for (List<Object> row : rawClientData) {
-	    	BigDecimal idBigDecimal = (BigDecimal) row.get(0);
-	        int id = idBigDecimal.intValue();
-	        String nom = (String) row.get(1);
-	        String prenom = (String) row.get(2);
-	     // Convert date to java.time.LocalDate
-	        java.sql.Timestamp timestamp = (java.sql.Timestamp) row.get(3);
-	        LocalDate date_nais = timestamp.toLocalDateTime().toLocalDate();;
-	        String tel = (String) row.get(4);
-	        String email = (String) row.get(5);
-	        // Create a Client object and add to the list
-	        clientsObsList.add(new Client(nom, prenom, date_nais, tel, email));
-	    }
+			Timer timer = new Timer();
+			timer.scheduleAtFixedRate(new TimerTask() {
+			    public void run() {
+			        Platform.runLater(() -> {
+			        	placeholderLabel.setText("Connection to the database failed. Retrying in " + seconds[0] + " sec.");
+	                    Table_Client.setPlaceholder(placeholderLabel);
+			            seconds[0]--;
+
+			            if (seconds[0] < 0) {
+			                timer.cancel(); // Stop the timer when the countdown reaches zero
+			                getAllClients(); // Optionally, trigger another attempt here
+			            }
+			        });
+			    }
+			}, 0, 1000);
+		}
+		
+
+		if (rawClientData != null) {
+		    for (List<Object> row : rawClientData) {
+		    	BigDecimal idBigDecimal = (BigDecimal) row.get(0);
+		        int id = idBigDecimal.intValue();
+		        String nom = (String) row.get(1);
+		        String prenom = (String) row.get(2);
+		     // Convert date to java.time.LocalDate
+		        java.sql.Timestamp timestamp = (java.sql.Timestamp) row.get(3);
+		        LocalDate date_nais = timestamp.toLocalDateTime().toLocalDate();;
+		        String tel = (String) row.get(4);
+		        String email = (String) row.get(5);
+		        // Create a Client object and add to the list
+		        clientsObsList.add(new Client(nom, prenom, date_nais, tel, email));
+		    }
+		}
 	    return clientsObsList;
 	}
-	
+		
 	
 	private void loadingTableIcon() {
 		// Load the loading GIF
@@ -112,10 +139,10 @@ public class ClientController {
         Table_Client.setPlaceholder(loadingImageView);
 	}
 	
-	private void updateTableView(ObservableList<Client> allClients) {
+	private void updateTableView() {
 
         // Set the items with the correct data type
-		Table_Client.setItems(allClients);
+		Table_Client.setItems(clientsObsList);
         
         // Populate columns of TableView with the data
         Name_Client.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getNOM_CLIENT()));

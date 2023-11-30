@@ -21,7 +21,7 @@ import com.myjavafxtemplate.myapp.java.utility.AppSecurity;
 public class DbRead {
 	
 	/** The conn. */
-	private static Connection conn = DbConnect.sharedConnection();
+	private static Connection conn;
 
 	/**
 	 * Instantiates a new db read.
@@ -41,6 +41,8 @@ public class DbRead {
 	public static List<List<Object>> read(String tableName, String sortBy) {
 		tableName = AppSecurity.sanitize(tableName);
 		sortBy = AppSecurity.sanitize(sortBy);
+		
+		conn = DbConnect.sharedConnection();
 		
 
         String sql = "SELECT * FROM " + tableName  + " ORDER BY " + sortBy;
