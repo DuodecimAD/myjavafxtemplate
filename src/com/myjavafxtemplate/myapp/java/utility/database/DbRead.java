@@ -3,6 +3,7 @@
  */
 package com.myjavafxtemplate.myapp.java.utility.database;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,6 +14,8 @@ import java.util.Collections;
 import java.util.List;
 
 import com.myjavafxtemplate.myapp.java.utility.AppSecurity;
+
+import oracle.jdbc.OracleTypes;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -31,6 +34,56 @@ public class DbRead {
 	    
 	}
 	
+	
+	
+	public static List<List<Object>> read(String tableName, String sortBy) {
+		tableName = AppSecurity.sanitize(tableName);
+		sortBy = AppSecurity.sanitize(sortBy);
+		
+		conn = DbConnect.sharedConnection();
+		
+		String call = "{call GetTableData(?, ?, ?)}";
+
+        try (CallableStatement callableStatement = conn.prepareCall(call)) {
+        	
+        	callableStatement.setString(1, tableName);
+            callableStatement.setString(2, sortBy);
+            
+            // Register the OUT parameter for the result set
+            callableStatement.registerOutParameter(3, OracleTypes.CURSOR);
+
+
+            // Execute the stored procedure
+            callableStatement.execute();
+             
+            // Get the result set from the OUT parameter
+            ResultSet rs = (ResultSet) callableStatement.getObject(3);
+
+            List<List<Object>> resultList = new ArrayList<>();
+            
+            ResultSetMetaData metaData = rs.getMetaData();
+            int columnCount = metaData.getColumnCount();
+
+            while (rs.next()) {
+            	List<Object> row = new ArrayList<>();
+                for (int i = 1; i <= columnCount; i++) {
+                    row.add(rs.getObject(i));
+                }
+                resultList.add(row);
+            }
+
+            if (!resultList.isEmpty()) {
+                return resultList;
+            } else {
+                System.out.println("No records found in the table.");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return Collections.emptyList(); // Return an empty list if there's an error or no results
+    }
+	
 	/**
 	 * Read.
 	 *
@@ -38,6 +91,7 @@ public class DbRead {
 	 * @param sortBy the sort by
 	 * @return the list
 	 */
+	/*
 	public static List<List<Object>> read(String tableName, String sortBy) {
 		tableName = AppSecurity.sanitize(tableName);
 		sortBy = AppSecurity.sanitize(sortBy);
@@ -74,7 +128,7 @@ public class DbRead {
 
         return Collections.emptyList(); // Return an empty list if there's an error or no results
     }
-	
+	*/
 	
 	/**
 	 * Read.

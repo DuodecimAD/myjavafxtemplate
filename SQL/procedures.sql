@@ -253,3 +253,25 @@ BEGIN
     COMMIT;
 END;
 /
+create or replace PROCEDURE GetTableData (
+    p_tableName    IN VARCHAR2,
+    p_orderBy      IN VARCHAR2,
+    p_resultSet    OUT SYS_REFCURSOR
+)
+IS
+    v_tableName VARCHAR2(255) := p_tableName;
+    v_orderBy   VARCHAR2(255) := p_orderBy;
+    sql_stmt    VARCHAR2(1000);
+
+BEGIN
+    -- Log
+    INSERT INTO debug_log (procedure_name, variable_name, variable_value)
+    VALUES ('GetTableData', 'Entering Procedure', 'beginning getting table ' || v_tableName);
+    COMMIT;
+
+     sql_stmt := 'SELECT * FROM ' || v_tableName || ' ORDER BY ' || v_orderBy;
+     
+    OPEN p_resultSet FOR sql_stmt;
+
+END;
+/
