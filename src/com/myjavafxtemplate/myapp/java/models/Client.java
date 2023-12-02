@@ -1,29 +1,29 @@
 package com.myjavafxtemplate.myapp.java.models;
 
-import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import com.myjavafxtemplate.myapp.java.utility.database.DbCreate;
+import com.myjavafxtemplate.myapp.java.utility.database.DbDelete;
 import com.myjavafxtemplate.myapp.java.utility.database.DbRead;
 
 public class Client {
 
-	public String NOM_CLIENT;
-	public String PRENOM_CLIENT;
-	public LocalDate DATE_NAIS_CLIENT;
-	public String TEL_CLIENT;
-	public String EMAIL_CLIENT;
+	private String tableName;
+	private String NOM_CLIENT;
+	private String PRENOM_CLIENT;
+	private LocalDate DATE_NAIS_CLIENT;
+	private String TEL_CLIENT;
+	private String EMAIL_CLIENT;
 	
 	public Client() {
 		// TODO Auto-generated constructor stub
 	}
 	
 	public Client(String NOM_CLIENT, String PRENOM_CLIENT, LocalDate DATE_NAIS_CLIENT, String TEL_CLIENT, String EMAIL_CLIENT) {
-
+		tableName = "CLIENT";
 		this.NOM_CLIENT = NOM_CLIENT;
 		this.PRENOM_CLIENT = PRENOM_CLIENT;
 		this.DATE_NAIS_CLIENT = DATE_NAIS_CLIENT;
@@ -32,6 +32,10 @@ public class Client {
 	}
 	
 	
+
+	public String getTableName() {
+		return tableName;
+	}
 
 	public String getNOM_CLIENT() {
 		return NOM_CLIENT;
@@ -90,5 +94,9 @@ public class Client {
 			throw e;
 		} 
     }
+	
+	public void setIsDeletedInDatabase(String telValue) {
+		DbDelete.setToIsDeleted("CLIENT", "TEL_CLIENT", telValue);
+	}
 	
 }

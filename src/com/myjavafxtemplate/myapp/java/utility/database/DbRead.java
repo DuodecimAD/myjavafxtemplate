@@ -65,12 +65,18 @@ public class DbRead {
             int columnCount = metaData.getColumnCount();
 
             while (rs.next()) {
+            	// creating row of client data
             	List<Object> row = new ArrayList<>();
                 for (int i = 1; i <= columnCount; i++) {
                     row.add(rs.getObject(i));
                 }
-                resultList.add(row);
+
+                // not adding client who are set to isDeleted to the observable list
+                if ("0".equals(row.get(row.size() - 1).toString())) {
+                    resultList.add(row);
+                }
             }
+
 
             if (!resultList.isEmpty()) {
                 return resultList;
@@ -130,57 +136,4 @@ public class DbRead {
     }
 	*/
 	
-	/**
-	 * Read.
-	 *
-	 * @param tableName the table name
-	 * @param dataString the data string
-	 * @param keyExist check from this column if valueExist already exist
-	 * @param valueExist check with this value if it's already exist
-	 * @return the list
-	 */
-	public static List<Object> read(String tableName, List<String> dataString, String keyExist, String valueExist) {
-		tableName = AppSecurity.sanitize(tableName);
-		dataString = AppSecurity.sanitize(dataString);
-		keyExist = AppSecurity.sanitize(keyExist);
-		valueExist = AppSecurity.sanitize(valueExist);
-
-    	String columns = "";
-
-	   	 for (int i = 0; i < dataString.size(); i++) {
-			columns += dataString.get(i);
-			if (i < dataString.size() - 1) {
-	            columns += ", ";
-	        }
-		}
-    	
-        String sql = "SELECT "+ columns +" FROM "+ tableName +" WHERE "+ keyExist +" = ?";
-        
-        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-        	
-            pstmt.setString(1, valueExist);
-            ResultSet rs = pstmt.executeQuery();
-
-            List<Object> resultList = new ArrayList<>();
-
-            ResultSetMetaData metaData = rs.getMetaData();
-            int columnCount = metaData.getColumnCount();
-
-            while (rs.next()) {
-                for (int i = 1; i <= columnCount; i++) {
-                    resultList.add(rs.getObject(i));
-                }
-            }
-
-            if (!resultList.isEmpty()) {
-                return resultList;
-            } else {
-                System.out.println("No matching records found.");
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        
-        return Collections.emptyList(); // Return an empty list if there's an error or no results
-    }
 }

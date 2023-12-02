@@ -82,12 +82,21 @@ public class ClientController {
  
 	}
 	
+	private void loadingTableIcon() {
+		// Load the loading GIF
+        Image loadingImage = new Image(getClass().getResourceAsStream(AppSettings.INSTANCE.imagesPath+"loading.gif"));
+        ImageView loadingImageView = new ImageView(loadingImage);
+
+        // Set the loading GIF as the custom placeholder
+        Table_Client.setPlaceholder(loadingImageView);
+	}
+	
 	private ObservableList<Client> getAllClients() {
 		
 	    // Get raw data from the Client model
 		List<List<Object>> rawClientData = null;
-		 Label placeholderLabel = new Label(); // Create label outside of the timer
-		 
+		Label placeholderLabel = new Label(); // Create label outside of the timer
+
 		try {
 			rawClientData = Client.getAllClientsData();
 		} catch (Exception e) {
@@ -129,15 +138,6 @@ public class ClientController {
 	    return clientsObsList;
 	}
 		
-	
-	private void loadingTableIcon() {
-		// Load the loading GIF
-        Image loadingImage = new Image(getClass().getResourceAsStream(AppSettings.INSTANCE.imagesPath+"loading.gif"));
-        ImageView loadingImageView = new ImageView(loadingImage);
-
-        // Set the loading GIF as the custom placeholder
-        Table_Client.setPlaceholder(loadingImageView);
-	}
 	
 	private void updateTableView() {
 
@@ -202,8 +202,8 @@ public class ClientController {
     }
 	
 	// Example usage for creating an overlay with client data
-	private void openOverlayWithClientData(Client rowData) {
-	    createOverlay(ClientBody, contentPane -> populateOverlayContent(contentPane, rowData));
+	private void openOverlayWithClientData(Client client) {
+	    createOverlay(ClientBody, contentPane -> populateOverlayContent(contentPane, client));
 	}
 
 	// Example usage for creating an overlay for a new client
@@ -212,30 +212,30 @@ public class ClientController {
 	}
 	
 	// Example usage for populating content with client data
-	private void populateOverlayContent(BorderPane contentPane, Client rowData) {
+	private void populateOverlayContent(BorderPane contentPane, Client client) {
 	    // Populate the content pane with input fields for client information
 	    // Add labels, text fields, and buttons for client information input
 
 		 // Populate the content pane with your content (you can load it from an FXML file if needed)
         Label nameLabel = new Label("Name");
         TextField nameField = new TextField();
-        nameField.setText(rowData.getNOM_CLIENT());
+        nameField.setText(client.getNOM_CLIENT());
         
         Label surnameLabel = new Label("Surname");
         TextField surnameField = new TextField();
-        surnameField.setText(rowData.getPRENOM_CLIENT());
+        surnameField.setText(client.getPRENOM_CLIENT());
         
         Label date_naisLabel = new Label("Date_Nais");
         DatePicker date_naisField = new DatePicker();
-        date_naisField.setValue(rowData.getDATE_NAIS_CLIENT());
+        date_naisField.setValue(client.getDATE_NAIS_CLIENT());
         
         Label telLabel = new Label("Tel");
         TextField telField = new TextField();
-        telField.setText(rowData.getTEL_CLIENT());
+        telField.setText(client.getTEL_CLIENT());
         
         Label emailLabel = new Label("Email");
         TextField emailField = new TextField();
-        emailField.setText(rowData.getEMAIL_CLIENT());
+        emailField.setText(client.getEMAIL_CLIENT());
         
         VBox overLayContent = new VBox();
         overLayContent.setId("overLayContent");
@@ -243,19 +243,22 @@ public class ClientController {
         
         Button buttonDelete = new Button("Delete");
         buttonDelete.setId("DeleteButton");
+        buttonDelete.setOnAction(e -> {
+        	deleteClient(client);
+        	getClientsObsList().remove(client);
+        	closeOverlay(ClientBody);
+        });
+        
         Button buttonOk = new Button("ok");
+        buttonOk.setOnAction(e -> {
+        	// to do
+        });
+        
         Button buttonCancel = new Button("Cancel");
         buttonCancel.setOnAction(e -> {
         	closeOverlay(ClientBody);
         });
         
-        buttonOk.setOnAction(e -> {
-        	// to do
-        });
-        
-        buttonDelete.setOnAction(e -> {
-        	// to do
-        });
         
         HBox overlayBottomButtons = new HBox();
         overlayBottomButtons.setId("overlayBottomButtons");
@@ -324,6 +327,11 @@ public class ClientController {
        
        contentPane.setCenter(overLayContent);
        contentPane.setBottom(overlayBottomButtons);
+	}
+	
+	private void deleteClient(Client client) {
+		
+		client.setIsDeletedInDatabase(client.getTEL_CLIENT());
 	}
 	
 	private String createNewClient(String nameField, String SurnameField, LocalDate date_naisField, String telField, String emailField) {

@@ -275,3 +275,27 @@ BEGIN
 
 END;
 /
+create or replace PROCEDURE SetToIsDeleted (
+    p_tableName IN VARCHAR2,
+    p_column    IN VARCHAR2,
+    p_value     IN VARCHAR2
+)
+IS
+    v_tableName VARCHAR2(255) := p_tableName;
+    v_column    VARCHAR2(255) := p_column;
+    v_value     VARCHAR2(255) := p_value;
+    sql_stmt    VARCHAR2(1000);
+
+BEGIN
+    -- Log
+    INSERT INTO debug_log (procedure_name, variable_name, variable_value)
+    VALUES ('SetToIsDeleted', 'Entering Procedure on ' || v_tableName, 'updating ' || v_value || ' in column : ' || v_column);
+    COMMIT;
+
+    sql_stmt := 'UPDATE ' || v_tableName || ' SET ISDELETED_' || v_tableName || ' = 1 WHERE ' || v_column || ' = :1';
+
+    -- Execute the dynamic SQL statement
+    EXECUTE IMMEDIATE sql_stmt USING v_value;
+
+END;
+/

@@ -154,43 +154,28 @@ TextField, #content Button{
  *   OVERLAY
  ****************/
  
-
-
 #overlayContentPane{
 	-fx-background-color : -secondary;
 
 }
 
 #overlayContentPane VBox{
-	-fx-padding : 20 30 0 30;
+	-fx-padding : 0 30 0 30;
 
-}
-
-#overlayContentPane Label{
-	-fx-padding: 10 0 0 0;
-    -fx-border-insets: 10 0 0 0;
-}
-
-#overlayContentPane #overlayBottomButtons{
-	-fx-padding: 35 0 20 290;
-
-    -fx-spacing: 20px;
 }
 
 #overlayContentPane Button{
 	-fx-min-width: 80px;
 }
 
-#overLayContent > Label{
-	-fx-text-fill: -text;
+#overlayContentPane Button:hover{
+	-fx-background-color: red;
 }
 
-.date-picker > .text-field{
-	-fx-text-fill: -primary;
-}
+/* top section */
 
 #overlayContentPane #overlayTopDelete{
-	-fx-padding: 20 0 -20 390;
+	-fx-padding: 20 0 0 390;
 }
 
 #overlayContentPane #overlayTopDelete Button{
@@ -205,5 +190,29 @@ TextField, #content Button{
 #errorLabelnewClient{
 	-fx-text-fill: -error;
 	-fx-padding : 30 0 -10 0;
-
 }
+
+/* center section */
+
+#overlayContentPane Label{
+	-fx-padding: 10 0 0 0;
+    -fx-border-insets: 10 0 0 0;
+}
+
+
+#overLayContent > Label{
+	-fx-text-fill: -text;
+}
+
+.date-picker > .text-field{
+	-fx-text-fill: -primary;
+}
+
+/* bottom section */
+
+#overlayContentPane #overlayBottomButtons{
+	-fx-padding: 35 0 20 290;
+    -fx-spacing: 20px;
+}
+
+
