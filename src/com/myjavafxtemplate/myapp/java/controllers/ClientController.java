@@ -1,14 +1,15 @@
 package com.myjavafxtemplate.myapp.java.controllers;
 
-import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.function.Consumer;
 import com.myjavafxtemplate.myapp.java.models.Client;
+import com.myjavafxtemplate.myapp.java.utility.AppSecurity;
 import com.myjavafxtemplate.myapp.java.utility.AppSettings;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
@@ -68,9 +69,9 @@ public class ClientController {
 		
         new Thread(() -> {
         	 Platform.runLater(() -> {
-			 	getAllClients();
+			 	readAllClients();
 			 	updateTableView();
-			 	filterTable();
+			 	searchTable();
 			 });
         }).start();
         
@@ -91,7 +92,7 @@ public class ClientController {
         Table_Client.setPlaceholder(loadingImageView);
 	}
 	
-	private ObservableList<Client> getAllClients() {
+	private ObservableList<Client> readAllClients() {
 		
 	    // Get raw data from the Client model
 		List<List<Object>> rawClientData = null;
@@ -112,7 +113,7 @@ public class ClientController {
 
 			            if (seconds[0] < 0) {
 			                timer.cancel(); // Stop the timer when the countdown reaches zero
-			                getAllClients(); // Optionally, trigger another attempt here
+			                readAllClients(); // Optionally, trigger another attempt here
 			            }
 			        });
 			    }
@@ -122,13 +123,12 @@ public class ClientController {
 
 		if (rawClientData != null) {
 		    for (List<Object> row : rawClientData) {
-		    	BigDecimal idBigDecimal = (BigDecimal) row.get(0);
-		        int id = idBigDecimal.intValue();
+		    	
 		        String nom = (String) row.get(1);
 		        String prenom = (String) row.get(2);
 		     // Convert date to java.time.LocalDate
 		        java.sql.Timestamp timestamp = (java.sql.Timestamp) row.get(3);
-		        LocalDate date_nais = timestamp.toLocalDateTime().toLocalDate();;
+		        LocalDate date_nais = timestamp.toLocalDateTime().toLocalDate();
 		        String tel = (String) row.get(4);
 		        String email = (String) row.get(5);
 		        // Create a Client object and add to the list
@@ -201,39 +201,41 @@ public class ClientController {
         
     }
 	
-	// Example usage for creating an overlay with client data
+	// overlay with client data
 	private void openOverlayWithClientData(Client client) {
 	    createOverlay(ClientBody, contentPane -> populateOverlayContent(contentPane, client));
 	}
 
-	// Example usage for creating an overlay for a new client
+	// overlay for a new client
 	private void openOverlayForNewClient() {
 	    createOverlay(ClientBody, contentPane -> populateOverlayForNewClient(contentPane));
 	}
 	
-	// Example usage for populating content with client data
+	//  when clicking on a row in Tableview, populate the data of that row in the overlay
 	private void populateOverlayContent(BorderPane contentPane, Client client) {
-	    // Populate the content pane with input fields for client information
-	    // Add labels, text fields, and buttons for client information input
 
-		 // Populate the content pane with your content (you can load it from an FXML file if needed)
         Label nameLabel = new Label("Name");
+        nameLabel.setId("NOM_CLIENT");
         TextField nameField = new TextField();
         nameField.setText(client.getNOM_CLIENT());
         
         Label surnameLabel = new Label("Surname");
+        surnameLabel.setId("PRENOM_CLIENT");
         TextField surnameField = new TextField();
         surnameField.setText(client.getPRENOM_CLIENT());
         
-        Label date_naisLabel = new Label("Date_Nais");
+        Label date_naisLabel = new Label("Birthday");
+        date_naisLabel.setId("DATE_NAIS_CLIENT");
         DatePicker date_naisField = new DatePicker();
         date_naisField.setValue(client.getDATE_NAIS_CLIENT());
         
-        Label telLabel = new Label("Tel");
+        Label telLabel = new Label("Telephone");
+        telLabel.setId("TEL_CLIENT");
         TextField telField = new TextField();
         telField.setText(client.getTEL_CLIENT());
         
         Label emailLabel = new Label("Email");
+        emailLabel.setId("EMAIL_CLIENT");
         TextField emailField = new TextField();
         emailField.setText(client.getEMAIL_CLIENT());
         
@@ -243,23 +245,9 @@ public class ClientController {
         
         Button buttonDelete = new Button("Delete");
         buttonDelete.setId("DeleteButton");
-        buttonDelete.setOnAction(e -> {
-        	deleteClient(client);
-        	getClientsObsList().remove(client);
-        	closeOverlay(ClientBody);
-        });
-        
         Button buttonOk = new Button("ok");
-        buttonOk.setOnAction(e -> {
-        	// to do
-        });
-        
         Button buttonCancel = new Button("Cancel");
-        buttonCancel.setOnAction(e -> {
-        	closeOverlay(ClientBody);
-        });
-        
-        
+
         HBox overlayBottomButtons = new HBox();
         overlayBottomButtons.setId("overlayBottomButtons");
         overlayBottomButtons.getChildren().addAll(buttonOk, buttonCancel);
@@ -271,13 +259,113 @@ public class ClientController {
         contentPane.setTop(overlayTopDelete);
         contentPane.setCenter(overLayContent);
         contentPane.setBottom(overlayBottomButtons);
+        
+        // buttons event logic
+        buttonCancel.setOnAction(e -> {
+        	closeOverlay(ClientBody);
+        });
+        
+        buttonDelete.setOnAction(e -> {
+        	deleteClient(client);
+        	getClientsObsList().remove(client);
+        	closeOverlay(ClientBody);
+        });
+
+        buttonOk.setOnAction(e -> {
+        	updateClient(client, nameLabel.getId(), 		client.getNOM_CLIENT(), 		nameField.getText(),		emailLabel.getId(),	client.getEMAIL_CLIENT()	);
+        	updateClient(client, surnameLabel.getId(), 	client.getPRENOM_CLIENT(), 		surnameField.getText(),			emailLabel.getId(),	client.getEMAIL_CLIENT()	);
+        	updateClient(client, date_naisLabel.getId(), 	client.getDATE_NAIS_CLIENT(), 	date_naisField.getValue(),	emailLabel.getId(),	client.getEMAIL_CLIENT()	);
+        	updateClient(client, telLabel.getId(), 		client.getTEL_CLIENT(), 		telField.getText(),				emailLabel.getId(),	client.getEMAIL_CLIENT()	);
+        	updateClient(client, emailLabel.getId(), 		client.getEMAIL_CLIENT(), 		emailField.getText(),		emailLabel.getId(),	client.getEMAIL_CLIENT()	);
+        	closeOverlay(ClientBody);
+        });
+	}
+	
+	private void deleteClient(Client client) {
+		
+		client.deleteClientDB(client.getTEL_CLIENT());
+	}
+	
+	public void updateClient(Client client, String fieldName, Object oldValue, Object newValue, String checkColumn, String checkValue) {
+		if(newValue instanceof LocalDate) {
+			
+		}else {
+			newValue = AppSecurity.sanitize(newValue.toString());
+		}
+		
+		switch (fieldName) {
+			case "NOM_CLIENT" -> {
+				if (compare(oldValue, newValue)) {
+					
+		            try {
+		                client.updateClientDB(fieldName, newValue, checkColumn, checkValue);
+		                client.setNOM_CLIENT(newValue.toString());
+		                System.out.println("name has been changed");
+		            } catch (SQLException e) {
+		                e.printStackTrace();
+		            }
+		        }
+			}
+			case "PRENOM_CLIENT" -> {
+				if (compare(oldValue, newValue)) {
+					try {
+						client.updateClientDB(fieldName, newValue, checkColumn, checkValue);
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+			        client.setPRENOM_CLIENT(newValue.toString());
+			        System.out.println("surname has been changed");
+			    }
+			}
+			case "DATE_NAIS_CLIENT" -> {
+				if (compare(oldValue, newValue)) {
+					try {
+						client.updateClientDB(fieldName, newValue, checkColumn, checkValue);
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+					LocalDate newDate = LocalDate.parse(newValue.toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			        client.setDATE_NAIS_CLIENT(newDate);
+			        System.out.println("date_nais has been changed");
+			    }
+			}
+			case "TEL_CLIENT" -> {
+				if (compare(oldValue, newValue)) {
+					try {
+						client.updateClientDB(fieldName, newValue, checkColumn, checkValue);
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+			        client.setTEL_CLIENT(newValue.toString());
+			        System.out.println("tel has been changed");
+			    }
+			}
+			case "EMAIL_CLIENT" -> {
+				if (compare(oldValue, newValue)) {
+					try {
+						client.updateClientDB(fieldName, newValue, checkColumn, checkValue);
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+			        client.setEMAIL_CLIENT(newValue.toString());
+			        System.out.println("email has been changed");
+			    }
+			}
+		}
+		Table_Client.refresh();
+	}
+	
+	private boolean compare(Object oldValue, Object newValue) {
+	    if (!Objects.equals(oldValue, newValue)) {
+	        return true;
+	    }
+	    return false;
 	}
 	
 
-	// Callback for populating content for a new client
+	// populating inputs in the overlay when clicking create new client
 	private void populateOverlayForNewClient(BorderPane contentPane) {
-	    // Populate the content pane with input fields for a new client
-	    // Add labels, text fields, and buttons for client information input
+
         Label nameLabel = new Label("Name");
         TextField nameField = new TextField();
         
@@ -285,7 +373,6 @@ public class ClientController {
         TextField surnameField = new TextField();
         
         Label date_naisLabel = new Label("Date_Nais");
-        //TextField date_naisField = new TextField();
         DatePicker date_naisField = new DatePicker();
         
         Label telLabel = new Label("Tel");
@@ -302,36 +389,30 @@ public class ClientController {
         overLayContent.getChildren().addAll(nameLabel, nameField, surnameLabel, surnameField, date_naisLabel, date_naisField, telLabel, telField, emailLabel, emailField, errorLabel);
         
         Button buttonOk = new Button("ok");
-        buttonOk.setOnAction(e -> {
-        	String newClientOK = createNewClient(nameField.getText(), surnameField.getText(), date_naisField.getValue(), telField.getText(), emailField.getText());
-        	
-        	if(newClientOK == "") {
-        		closeOverlay(ClientBody);
-        	}else {
-        		errorLabel.setText(newClientOK);
-        	}
-        	
-        });
-        
         Button buttonCancel = new Button("Cancel");
-        buttonCancel.setOnAction(e -> {
-        	closeOverlay(ClientBody);
-        });
-        
-        
 
-        
         HBox overlayBottomButtons = new HBox();
         overlayBottomButtons.setId("overlayBottomButtons");
         overlayBottomButtons.getChildren().addAll(buttonOk, buttonCancel);
        
        contentPane.setCenter(overLayContent);
        contentPane.setBottom(overlayBottomButtons);
-	}
-	
-	private void deleteClient(Client client) {
-		
-		client.setIsDeletedInDatabase(client.getTEL_CLIENT());
+       
+       // buttons event logic
+       buttonCancel.setOnAction(e -> {
+    	   closeOverlay(ClientBody);
+       });
+       
+       buttonOk.setOnAction(e -> {
+       	String newClientOK = createNewClient(nameField.getText(), surnameField.getText(), date_naisField.getValue(), telField.getText(), emailField.getText());
+       	
+       	if(newClientOK == "") {
+       		closeOverlay(ClientBody);
+       	}else {
+       		errorLabel.setText(newClientOK);
+       	}
+       	
+       });
 	}
 	
 	private String createNewClient(String nameField, String SurnameField, LocalDate date_naisField, String telField, String emailField) {
@@ -339,7 +420,7 @@ public class ClientController {
 		Client newClient = new Client(nameField, SurnameField, date_naisField, telField, emailField);
 
 		try {
-			Client.insertIntoDatabase(newClient);
+			newClient.insertClientDB(newClient);
 			System.out.println(newClient.toString() + " added to database without problem");
 			getClientsObsList().add(newClient);
 		} catch (SQLException e) {
@@ -385,7 +466,7 @@ public class ClientController {
 	 * Works out of the box, thanks chatGPT
 	 */
 	
-	private void filterTable() {
+	private void searchTable() {
 		FilteredList<Client> filteredData = new FilteredList<>(clientsObsList, p -> true);
 		
 		// Add listener to the searchField text property

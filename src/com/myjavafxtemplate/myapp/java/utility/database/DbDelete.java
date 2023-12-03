@@ -5,16 +5,9 @@ package com.myjavafxtemplate.myapp.java.utility.database;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 import com.myjavafxtemplate.myapp.java.utility.AppSecurity;
-
-import oracle.jdbc.OracleTypes;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -33,7 +26,7 @@ public class DbDelete {
 	    
 	}
 	
-	public static void setToIsDeleted(String tableName, String column, String value) {
+	public static void delete(String tableName, String column, String value) {
 		tableName = AppSecurity.sanitize(tableName);
 		column = AppSecurity.sanitize(column);
 		value = AppSecurity.sanitize(value);
@@ -52,11 +45,11 @@ public class DbDelete {
             callableStatement.execute();
 
 
-            System.out.println("Based on value :" + value + ", the row has been set to isDeleted");
+            System.out.println("Based on value : " + value + ", the row has been set to isDeleted");
             
         } catch (SQLException e) {
             e.getMessage();
-            System.out.println("no row has been found in table " + tableName + " with value " + value + " in column : " + column);
+            System.out.println("no row has been found in table : " + tableName + " with value : " + value + " in column : " + column);
         }
 
 

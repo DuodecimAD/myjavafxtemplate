@@ -8,10 +8,11 @@ import java.util.List;
 import com.myjavafxtemplate.myapp.java.utility.database.DbCreate;
 import com.myjavafxtemplate.myapp.java.utility.database.DbDelete;
 import com.myjavafxtemplate.myapp.java.utility.database.DbRead;
+import com.myjavafxtemplate.myapp.java.utility.database.DbUpdate;
 
 public class Client {
 
-	private String tableName;
+	private static String tableName = "CLIENT";
 	private String NOM_CLIENT;
 	private String PRENOM_CLIENT;
 	private LocalDate DATE_NAIS_CLIENT;
@@ -23,7 +24,6 @@ public class Client {
 	}
 	
 	public Client(String NOM_CLIENT, String PRENOM_CLIENT, LocalDate DATE_NAIS_CLIENT, String TEL_CLIENT, String EMAIL_CLIENT) {
-		tableName = "CLIENT";
 		this.NOM_CLIENT = NOM_CLIENT;
 		this.PRENOM_CLIENT = PRENOM_CLIENT;
 		this.DATE_NAIS_CLIENT = DATE_NAIS_CLIENT;
@@ -80,23 +80,32 @@ public class Client {
 	public static List<List<Object>> getAllClientsData() {
         // Fetch data from the database (using DbRead or any other method)
         // Return raw data as a List<List<?>>
-        return DbRead.read("CLIENT", "NOM_CLIENT");
+        return DbRead.read(tableName, "NOM_CLIENT");
     }
 	
-	public static void insertIntoDatabase(Client client) throws SQLException {
+	public void insertClientDB(Client client) throws SQLException {
 
 		List<String> columnsList = new ArrayList<>(List.of("NOM_CLIENT", "PRENOM_CLIENT", "DATE_NAIS_CLIENT", "TEL_CLIENT", "EMAIL_CLIENT"));
 		List<Object> valuesList =  new ArrayList<>(List.of(client.getNOM_CLIENT(), client.getPRENOM_CLIENT(), client.getDATE_NAIS_CLIENT(), client.getTEL_CLIENT(), client.getEMAIL_CLIENT()));
 
         try {
-			DbCreate.insert("CLIENT", columnsList, valuesList);
+			DbCreate.insert(tableName, columnsList, valuesList);
 		} catch (SQLException e) {
 			throw e;
 		} 
     }
 	
-	public void setIsDeletedInDatabase(String telValue) {
-		DbDelete.setToIsDeleted("CLIENT", "TEL_CLIENT", telValue);
+	public void deleteClientDB(String telValue) {
+		DbDelete.delete(tableName, "TEL_CLIENT", telValue);
+	}
+	
+	public void updateClientDB(String column, Object value, String checkColumn, String checkValue) throws SQLException {
+
+		try {
+			DbUpdate.update(tableName, column, value, checkColumn, checkValue);
+		} catch (SQLException e) {
+			throw e;
+		}
 	}
 	
 }

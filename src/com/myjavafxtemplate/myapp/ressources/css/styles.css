@@ -13,6 +13,14 @@
     
 }
 
+.button{
+	-fx-cursor: hand; 
+}
+
+.text-field{
+	-fx-text-fill: -primary;
+}
+
 #menuPane{
 	-fx-background-color: -secondary;
 	-fx-alignement: center;
@@ -51,44 +59,63 @@
 	-fx-effect: none;
 }
 
-#menuPane .button:focused, #menuPane #activeMenuButton {
+#menuPane #activeMenuButton {
 	-fx-background-color: -background;
 }
 
-/*
-#menuPane .button:pressed {
-    
-}
+/****************
+ *   CONTENT
+ ****************/
 
-
-
-#menuPane .button:disabled, #menuPane .button:default:disabled {
-    -fx-opacity: 0.4;
-    -fx-background-color: #DDE6ED;
-    -fx-text-fill: yellow;
-}
-*/
 #content{
 	-fx-background-color: -background;
-	-fx-padding: 20 20 20 20;
-
-	
+	-fx-padding: 20;
 }
 
 #content > Label{
 	-fx-text-fill: -text;
 	-fx-wrap-text: true;
-	/*-fx-padding: 0 0 16 0;*/
 }
 
-TextField, #content Button{
-	-fx-text-fill: -primary;
-	/*-fx-padding: 0 0 16 0;*/
+#searchLabel{
+	-fx-font-weight: bold;
+    -fx-font-size: 1.1em; 
+    -fx-text-fill: -text;
+    -fx-padding: 5 0 0 0;
 }
 
-/****************
- *   TABLE
- ****************/
+#clientTop{
+	/*-fx-background-color: yellow;*/
+	-fx-pref-height: 55;
+}
+
+#createClientButton {
+    -fx-padding: 5 15 12 15;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 8;
+    -fx-background-color: 
+    	-primary,
+        -secondary,
+        -primary;  
+
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+    -fx-font-weight: bold;
+    -fx-font-size: 1.1em; 
+    -fx-text-fill: -text;
+}
+
+#createClientButton:hover {
+    -fx-background-color: 
+        -primary,
+        -secondary,
+        -background;        
+}
+
+#createClientButton:pressed{
+    -fx-padding: 6 0 12 0;
+}
+
+/* TABLE */
 #ClientBody{
  	-fx-padding: -20;
 }
@@ -97,7 +124,6 @@ TextField, #content Button{
  	-fx-padding: 20;
 }
  
-
 
 .table-cell .text,.table-view .column-header .text{
 	-fx-fill: -primary;
@@ -126,17 +152,9 @@ TextField, #content Button{
     -fx-fill: -text;
 }
 
-/* 
-.table-row-cell:focused {
-    -fx-background-color: -accent; 
-    -fx-background-insets: 0;
-    -fx-border-color: transparent;
-}
-*/
 .table-view .column-header {
     -fx-background-color: transparent;
-    -fx-border-width: 0;
-    
+    -fx-border-width: 0; 
 }
 
 #searchLabel{
@@ -147,7 +165,6 @@ TextField, #content Button{
     -fx-focus-color: transparent;
     -fx-faint-focus-color: transparent;
 }
-
 
 
 /****************
@@ -168,23 +185,25 @@ TextField, #content Button{
 	-fx-min-width: 80px;
 }
 
-#overlayContentPane Button:hover{
-	-fx-background-color: red;
+#overlayContentPane > * > Button:hover{
+	/*-fx-background-color: blue;*/
 }
 
 /* top section */
 
 #overlayContentPane #overlayTopDelete{
 	-fx-padding: 20 0 0 390;
+	
 }
 
-#overlayContentPane #overlayTopDelete Button{
-	-fx-min-width: 80px;
+#overlayTopDelete Button{
+
 	-fx-text-fill : -error;
+	
 }
 
 #Delete_Client {
-
+	
 }
 
 #errorLabelnewClient{
@@ -210,9 +229,39 @@ TextField, #content Button{
 
 /* bottom section */
 
-#overlayContentPane #overlayBottomButtons{
+#overlayBottomButtons{
 	-fx-padding: 35 0 20 290;
     -fx-spacing: 20px;
+    
 }
 
+#overlayBottomButtons .button{
+	-fx-text-fill: -text;
+}
+
+#overlayContentPane > * > .button {
+    -fx-padding: 5 0 12 0;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 8;
+    -fx-background-color: 
+    	-primary,
+        -secondary,
+        -background;
+
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+    -fx-font-weight: bold;
+    -fx-font-size: 1.1em; 
+
+}
+
+#overlayContentPane > * > .button:hover {
+    -fx-background-color: 
+        -primary,
+        -secondary,
+        -primary;          
+}
+
+#overlayContentPane > * > .button:pressed{
+    -fx-padding: 6 0 12 0;
+}
 

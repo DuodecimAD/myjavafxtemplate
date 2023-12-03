@@ -299,3 +299,42 @@ BEGIN
 
 END;
 /
+
+create or replace PROCEDURE updateData (
+    p_tableName     IN VARCHAR2,
+    p_column        IN VARCHAR2,
+    p_value         IN VARCHAR2,
+    p_checkColumn   IN VARCHAR2,
+    p_checkValue    IN VARCHAR2
+)
+IS
+    v_tableName     VARCHAR2(255) := p_tableName;
+    v_column        VARCHAR2(255) := p_column;
+    v_value         VARCHAR2(255) := p_value;
+    v_checkColumn   VARCHAR2(255) := p_checkColumn;
+    v_checkValue    VARCHAR2(255) := p_checkValue;
+    d_value1        DATE;
+    sql_stmt        VARCHAR2(1000);
+
+BEGIN
+    -- Log
+    INSERT INTO debug_log (procedure_name, variable_name, variable_value)
+    VALUES ('updateData', 'Entering Procedure on ' || v_tableName,  'updating ' || v_value || ' in column : ' || v_column || 
+                                                                        ' of row where column : ' || v_checkColumn || 
+                                                                        ' with value : ' || v_checkValue);
+    COMMIT;
+    
+    
+    sql_stmt := 'UPDATE ' || v_tableName || ' SET ' || v_column || ' = :1 WHERE ' || v_checkColumn || ' = :2';
+    
+    CASE
+        WHEN v_column = 'DATE_NAIS_CLIENT' THEN
+            d_value1 := TO_DATE(v_value, 'YYYY-MM-DD');
+            EXECUTE IMMEDIATE sql_stmt USING d_value1, v_checkValue;
+            
+        ELSE
+            EXECUTE IMMEDIATE sql_stmt USING v_value, v_checkValue;
+    END CASE;
+    
+END;
+/
