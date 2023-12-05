@@ -197,7 +197,7 @@ public class ClientController {
         
         // Set the dimensions after the stage is shown
         contentPane.setLayoutX((stackPane.getWidth() - contentPane.getPrefWidth()) / 2);
-        contentPane.setLayoutY(70);
+        contentPane.setLayoutY(80);
         
     }
 	

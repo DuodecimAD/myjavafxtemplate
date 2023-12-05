@@ -127,7 +127,7 @@ public class App extends Application {
 			primaryStage.setScene(new Scene(root));
 			primaryStage.setTitle("My JavaFX Template");
 			primaryStage.setMinWidth(1026);
-			primaryStage.setMinHeight(650);
+			primaryStage.setMinHeight(655);
 			/*primaryStage.initStyle(StageStyle.DECORATED);
 			primaryStage.setResizable(false); // Prevent window resizing
 			primaryStage.setMaximized(true); // Allow maximizing */
