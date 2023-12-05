@@ -1,17 +1,10 @@
 package com.myjavafxtemplate.myapp.java.controllers;
 
-
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
-
 import com.myjavafxtemplate.myapp.java.utility.AppSettings;
-import com.myjavafxtemplate.myapp.java.utility.database.DbConnect;
-
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
@@ -20,11 +13,7 @@ public class ChallengeController {
     private Pane ChallengeA;
 	@FXML
 	private Pane ChallengeB;
-	
-	public ChallengeController() {
-
-	}
-	
+		
 	
 	public void initialize() {
 

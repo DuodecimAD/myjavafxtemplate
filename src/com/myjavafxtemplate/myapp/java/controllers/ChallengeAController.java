@@ -7,29 +7,24 @@ import javafx.scene.control.Label;
 
 
 public class ChallengeAController {
-	@FXML
+    
+    @FXML
     private Button ButtonAzerty;
-	@FXML
+    
+    @FXML
     private Label LabelA;
 
-
-	public ChallengeAController() {
-		
-	}
-	
-	@FXML
+    @FXML
     public void initialize() {
 
-		ButtonAzerty.setOnMouseClicked(event -> {
+        ButtonAzerty.setOnMouseClicked(event -> {
+            // Get the root of the current controller's scene
+            Parent root = ButtonAzerty.getScene().getRoot();
+            
+            Label labelB = (Label) root.lookup("#LabelB");
+            labelB.setText("New value from ChallengeA");
+            labelB.setStyle("-fx-background-color : yellow; -fx-font-size: 40px; -fx-text-fill : red;");
+        });
+    }
 
-			 
-	        // Get the root of the current controller's scene
-	        Parent root = ButtonAzerty.getScene().getRoot();
-
-	        Label labelB = (Label) root.lookup("#LabelB");
-	        labelB.setText("New value from ChallengeA");
-	        labelB.setStyle("-fx-background-color : yellow; -fx-font-size: 40px; -fx-text-fill : red;");
-		 });
-	}
-	
 }

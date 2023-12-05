@@ -1,12 +1,8 @@
-/*
- * 
- */
 package com.myjavafxtemplate.myapp.java.controllers;
 
 
 import com.myjavafxtemplate.myapp.java.utility.AppSettings;
 import com.myjavafxtemplate.myapp.java.utility.LoggerUtil;
-
 
 import java.io.File;
 import java.net.URL;
@@ -20,7 +16,6 @@ import java.util.jar.JarFile;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -69,7 +64,6 @@ public class AppController {
     private void setMenu() {
     	setMenuContentButtons();
     	setMenuSettingsButton();
-    	menuButtonsAction();
     }
     
     /**
@@ -191,7 +185,7 @@ public class AppController {
                 body.setCenter(cachedFXML.getContent());
             } else {
             	URL pathUrl;
-            	if(fxmlName != "Settings.fxml") {
+            	if(!fxmlName.equals("Settings.fxml")) {
             		pathUrl = new URL(AppSettings.INSTANCE.appUrlPath +"content/" + fxmlName);
             	}else {
             		pathUrl = new URL(AppSettings.INSTANCE.appUrlPath + fxmlName);
@@ -211,14 +205,6 @@ public class AppController {
              e.printStackTrace();
          }
      }
-
-    
-    /**
-     * Menu buttons action.
-     */
-    public void menuButtonsAction() {
-    	
-    }
     
     public class CachedFXML {
         private final Node content;

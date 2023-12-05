@@ -6,13 +6,10 @@ import javafx.scene.control.Label;
 
 public class ChallengeBController {
 
- 	@FXML
+    @FXML
     private Button ButtonB;
+    
     @FXML
     private Label LabelB;
-
-    public ChallengeBController() {
-    	
-    }
 
 }

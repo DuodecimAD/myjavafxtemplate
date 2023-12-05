@@ -24,15 +24,16 @@ public class DbUpdate {
 	 * Instantiates a new db update.
 	 */
 	// Private constructor to prevent instantiation
-	private DbUpdate() {
-	    
-	}
+	private DbUpdate() {}
 	
 	public static void update(String tableName, String column, Object value, String checkColumn, String checkValue) throws SQLException {
-		column = AppSecurity.sanitize(column);
-		String newvalue = AppSecurity.sanitize(value.toString());
+		String sanitizedTableName = AppSecurity.sanitize(tableName);
+		String sanitizedColumn = AppSecurity.sanitize(column);
+		String sanitizedValue = AppSecurity.sanitize(value.toString());
+		String sanitizedCheckColumn = AppSecurity.sanitize(checkColumn);
+		String sanitizedCheckValue = AppSecurity.sanitize(checkValue);
 		
-		System.out.println(newvalue);
+		System.out.println(sanitizedValue);
 		
 		conn =  DbConnect.sharedConnection();
 		
@@ -40,24 +41,21 @@ public class DbUpdate {
 
         try (CallableStatement callableStatement = conn.prepareCall(call)) {
         	
-        	callableStatement.setString(1, tableName);
-            callableStatement.setString(2, column);
-    		callableStatement.setString(3, newvalue);
-            callableStatement.setString(4, checkColumn);
-            callableStatement.setString(5, checkValue);
+        	callableStatement.setString(1, sanitizedTableName);
+            callableStatement.setString(2, sanitizedColumn);
+    		callableStatement.setString(3, sanitizedValue);
+            callableStatement.setString(4, sanitizedCheckColumn);
+            callableStatement.setString(5, sanitizedCheckValue);
             
             // Execute the stored procedure
             callableStatement.execute();
 
-
-            System.out.println("column : " + column + " has been updated with value : "+ value + " based on the column : " + checkColumn + " with value : " + checkValue);
+            System.out.println("column : " + sanitizedColumn + " has been updated with value : "+ sanitizedValue + " based on the column : " + sanitizedCheckColumn + " with value : " + sanitizedCheckValue);
             
         } catch (SQLException e) {
         	throw e;
         }
-		
-		
-		
+
 	}
 
 }

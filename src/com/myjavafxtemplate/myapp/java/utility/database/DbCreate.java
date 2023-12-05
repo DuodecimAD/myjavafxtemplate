@@ -25,26 +25,24 @@ public class DbCreate {
 	 * Instantiates a new db create.
 	 */
 	// Private constructor to prevent instantiation
-	private DbCreate() {
-	    
-	}
+	private DbCreate() {}
 	
 	
 	public static void insert(String tableName, List<String> columnsList, List<Object> valuesList) throws SQLException {
-		tableName = AppSecurity.sanitize(tableName);
-		columnsList = AppSecurity.sanitize(columnsList);
+		String sanitizedTableName = AppSecurity.sanitize(tableName);
+		List<String> sanitizedColumnsList = AppSecurity.sanitize(columnsList);
 		
    	 	String columns = "";
    	 	String values = "";
    	 	int columnsLength = 0;
 
-   	 	for (int i = 0; i < columnsList.size(); i++) {
+   	 	for (int i = 0; i < sanitizedColumnsList.size(); i++) {
    		 
-			columns += columnsList.get(i);
+			columns += sanitizedColumnsList.get(i);
 			values += valuesList.get(i).toString();
 			columnsLength++;
 
-			if (i < columnsList.size() - 1) {
+			if (i < sanitizedColumnsList.size() - 1) {
 	            columns += ", ";
 	            values += ", ";
 	        }
@@ -67,7 +65,7 @@ public class DbCreate {
 
 
     	// Set parameter values
-           callableStatement.setString(1, tableName);
+           callableStatement.setString(1, sanitizedTableName);
            callableStatement.setString(2, columns);
            callableStatement.setInt(3, columnsLength);
            callableStatement.setString(4, values);
@@ -85,75 +83,4 @@ public class DbCreate {
 	
    }
 	
-	/**
-	 * Insert.
-	 * @param tableName the table name
-	 * @param List of columns names - Strings
-	 * @param List of values - any Type
-	 * @param checkPositions the check positions LIST
-	 * @return 
-	 * @throws SQLException 
-	 */
-	/*public static void insert(String tableName, List<String> columnsList, List<Object> valuesList, List<Integer> checkPositions) throws SQLException {
-		tableName = AppSecurity.sanitize(tableName);
-		columnsList = AppSecurity.sanitize(columnsList);
-		
-   	 	String columns = "";
-   	 	String values = "";
-
-   	 	for (int i = 0; i < columnsList.size(); i++) {
-   		 
-			columns += columnsList.get(i);
-			values += "?";
-
-			if (i < columnsList.size() - 1) {
-	            columns += ", ";
-	            values += ", ";
-	        }
-		}
-   	 
-   	 	String sqlInsert = "INSERT INTO "+ tableName +"("+ columns +") VALUES("+ values +")";
-   	 	String checkIfExists = "SELECT COUNT(*) AS count FROM " + tableName + " WHERE ";
-
-   	    for (int position : checkPositions) {
-   	        checkIfExists += columnsList.get(position) + " = ? OR ";
-   	    }
-
-   	    // Remove the trailing "OR" from the WHERE clause
-   	    checkIfExists = checkIfExists.substring(0, checkIfExists.length() - 4);
-
-       try (PreparedStatement pstmtCheck = conn.prepareStatement(checkIfExists);
-            PreparedStatement pstmtInsert = conn.prepareStatement(sqlInsert)) {
-
-
-	         // Set parameters for the WHERE clause based on checkPositions
-	         for (int j = 0; j < checkPositions.size(); j++) {
-	             pstmtCheck.setString(j + 1, (String) valuesList.get(checkPositions.get(j)));
-	         }
-	
-	         ResultSet rs = pstmtCheck.executeQuery();
-	         
-
-	         if (rs.next()) {
-	             int count = rs.getInt("count");
-	             
-	             if (count == 0) {
-	                 // Set the parameters based on the dataString list
-	                 for (int j = 0; j < valuesList.size(); j++) {
-	                     pstmtInsert.setObject(j + 1, valuesList.get(j));
-	                 }
-	
-	                 pstmtInsert.executeUpdate();
-	                 System.out.println(valuesList + " was inserted successfully!");
-	             } else {
-	                 throw new SQLException("tel or email already exists");
-	             }
-	         }
-             
-       } catch (SQLException e) {
-           System.out.println(e.getMessage());
-           throw e;
-       }
-	
-   }*/
 }

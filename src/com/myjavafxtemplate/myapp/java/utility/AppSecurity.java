@@ -6,18 +6,12 @@ package com.myjavafxtemplate.myapp.java.utility;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO: Auto-generated Javadoc
+
 /**
  * The Class AppSecurity.
  */
 public class AppSecurity {
 
-	/**
-	 * Instantiates a new app security.
-	 */
-	private AppSecurity() {
-		
-	}
 	
 	/**
 	 * Sanitize.

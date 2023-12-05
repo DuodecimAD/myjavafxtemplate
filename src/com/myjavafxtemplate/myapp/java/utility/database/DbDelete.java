@@ -22,14 +22,12 @@ public class DbDelete {
 	 * Instantiates a new db delete.
 	 */
 	// Private constructor to prevent instantiation
-	private DbDelete() {
-	    
-	}
+	private DbDelete() {}
 	
 	public static void delete(String tableName, String column, String value) {
-		tableName = AppSecurity.sanitize(tableName);
-		column = AppSecurity.sanitize(column);
-		value = AppSecurity.sanitize(value);
+		String sanitizedTableName = AppSecurity.sanitize(tableName);
+		String sanitizedColumn = AppSecurity.sanitize(column);
+		String sanitizedValue = AppSecurity.sanitize(value);
 		
 		conn = DbConnect.sharedConnection();
 		
@@ -37,19 +35,19 @@ public class DbDelete {
 
         try (CallableStatement callableStatement = conn.prepareCall(call)) {
         	
-        	callableStatement.setString(1, tableName);
-            callableStatement.setString(2, column);
-            callableStatement.setString(3, value);
+        	callableStatement.setString(1, sanitizedTableName);
+            callableStatement.setString(2, sanitizedColumn);
+            callableStatement.setString(3, sanitizedValue);
             
             // Execute the stored procedure
             callableStatement.execute();
 
 
-            System.out.println("Based on value : " + value + ", the row has been set to isDeleted");
+            System.out.println("Based on value : " + sanitizedValue + ", the row has been set to isDeleted");
             
         } catch (SQLException e) {
             e.getMessage();
-            System.out.println("no row has been found in table : " + tableName + " with value : " + value + " in column : " + column);
+            System.out.println("no row has been found in table : " + sanitizedTableName + " with value : " + sanitizedValue + " in column : " + sanitizedColumn);
         }
 
 
