@@ -16,7 +16,7 @@ public class DbConnect {
 
     /** The conn. */
     private static Connection conn;
-    
+
     private static boolean timerActive = false;
 
     /**
@@ -24,46 +24,46 @@ public class DbConnect {
      */
     private DbConnect() {
 
-	try {
-	    // Provide the connection URL, username, and password
-	    String url = AppSettings.INSTANCE.dbUrl;
-	    String username = AppSettings.INSTANCE.dbUsername;
-	    String password = AppSettings.INSTANCE.dbPassword;
+        try {
+            // Provide the connection URL, username, and password
+            String url = AppSettings.INSTANCE.dbUrl;
+            String username = AppSettings.INSTANCE.dbUsername;
+            String password = AppSettings.INSTANCE.dbPassword;
 
-	    // Load the Oracle JDBC driver
-	    Class.forName("oracle.jdbc.OracleDriver");
+            // Load the Oracle JDBC driver
+            Class.forName("oracle.jdbc.OracleDriver");
 
-	    // Establish the database connection
-	    conn = DriverManager.getConnection(url, username, password);
-	    System.out.println("Connection to Oracle Database has been established.");
-	} catch (SQLException e) {
-	    System.out.println("SQL Exception: " + e.getMessage());
-	    handleConnectionError();
-	} catch (ClassNotFoundException e) {
-	    System.out.println("Class Not Found Exception: " + e.getMessage());
-	}
+            // Establish the database connection
+            conn = DriverManager.getConnection(url, username, password);
+            System.out.println("Connection to Oracle Database has been established.");
+        } catch (SQLException e) {
+            System.out.println("SQL Exception: " + e.getMessage());
+            handleConnectionError();
+        } catch (ClassNotFoundException e) {
+            System.out.println("Class Not Found Exception: " + e.getMessage());
+        }
 
     }
 
     private void handleConnectionError() {
-	final int[] seconds = {30}; // Initial countdown value
-	timerActive = true;
+        final int[] seconds = {30}; // Initial countdown value
+        timerActive = true;
 
-	Timer timer = new Timer();
-	timer.scheduleAtFixedRate(new TimerTask() {
-	    public void run() {
-		Platform.runLater(() -> {
-		    System.out.println("Connection to database failed. Trying again in " + seconds[0] + " sec.");
-		    seconds[0]--;
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            public void run() {
+                Platform.runLater(() -> {
+                    System.out.println("Connection to database failed. Trying again in " + seconds[0] + " sec.");
+                    seconds[0]--;
 
-		    if (seconds[0] < 0) {
-			timer.cancel(); // Stop the timer when the countdown reaches zero
-			timerActive = false;
-			sharedConnection(); // Optionally, trigger another attempt here
-		    }
-		});
-	    }
-	}, 0, 1000);
+                    if (seconds[0] < 0) {
+                        timer.cancel(); // Stop the timer when the countdown reaches zero
+                        timerActive = false;
+                        sharedConnection(); // Optionally, trigger another attempt here
+                    }
+                });
+            }
+        }, 0, 1000);
     }
 
     /**
@@ -72,10 +72,10 @@ public class DbConnect {
      * @return the connection
      */
     private static Connection getConnection() {
-	if (conn == null && timerActive == false) {
-	    new DbConnect(); // Initialize the connection if it's not already done
-	}
-	return conn;
+        if (conn == null && timerActive == false) {
+            new DbConnect(); // Initialize the connection if it's not already done
+        }
+        return conn;
     }
 
     /**
@@ -84,25 +84,25 @@ public class DbConnect {
      * @return the connection
      */
     public static Connection sharedConnection() {
-	return getConnection();
+        return getConnection();
     }
 
     /**
      * Close the connection.
      */
     public static void closeConnection() {
-	try {
-	    Connection connection = sharedConnection();
-	    if (connection != null && !connection.isClosed()) {
-		connection.close();
-		System.out.println("Connection to Oracle Database has been closed.");
-		conn = null; // Set the connection variable to null after closing
-	    } else {
-		System.out.println("Connection is already closed or null.");
-	    }
-	} catch (SQLException e) {
-	    e.printStackTrace();
-	}
+        try {
+            Connection connection = sharedConnection();
+            if (connection != null && !connection.isClosed()) {
+                connection.close();
+                System.out.println("Connection to Oracle Database has been closed.");
+                conn = null; // Set the connection variable to null after closing
+            } else {
+                System.out.println("Connection is already closed or null.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }

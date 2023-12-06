@@ -1,6 +1,3 @@
-/*
- * 
- */
 package com.myjavafxtemplate.myapp.java.utility;
 
 // TODO: Auto-generated Javadoc
@@ -8,15 +5,15 @@ package com.myjavafxtemplate.myapp.java.utility;
  * The Class AppMemory.
  */
 public class AppMemory {
-	
+
     /**
      * Prints the memory usage.
      */
     public static void printMemoryUsage() {
-    	System.out.println("//////////////Memory/////////////////");
+        System.out.println("//////////////Memory/////////////////");
         // Get the runtime object
         Runtime runtime = Runtime.getRuntime();
-        
+
         // Total memory in the JVM
         long totalMemory = runtime.totalMemory()  / (1024 * 1024);
         // Free memory in the JVM
@@ -25,12 +22,12 @@ public class AppMemory {
         long maxMemory = runtime.maxMemory() / (1024 * 1024);
         // Calculate used memory
         long usedMemory = totalMemory - freeMemory / (1024 * 1024);
-    
+
         // Create a memory usage string
         String memoryUsage = String.format("Total: %d MB / Free: %d MB /  Max: %d MB / Used: %d MB ", totalMemory, freeMemory, maxMemory, usedMemory);
 
         // Print memory usage on the same line
         System.out.println(memoryUsage);
- 
+
     }
 }

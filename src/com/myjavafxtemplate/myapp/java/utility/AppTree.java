@@ -1,6 +1,3 @@
-/*
- * 
- */
 package com.myjavafxtemplate.myapp.java.utility;
 
 import javafx.scene.Parent;
@@ -13,23 +10,23 @@ import javafx.scene.text.Text;
  * The Class AppTree.
  */
 public class AppTree {
-	
-	/**
-	 * Prints the scene.
-	 *
-	 * @param scene the scene
-	 */
-	public static void printScene(Scene scene) {
-		System.out.println("///////////////Tree//////////////////");
+
+    /**
+     * Prints the scene.
+     *
+     * @param scene the scene
+     */
+    public static void printScene(Scene scene) {
+        System.out.println("///////////////Tree//////////////////");
         System.out.println("Scene Details:");
         System.out.println("Width: " + scene.getWidth());
         System.out.println("Height: " + scene.getHeight());
         System.out.println("Stylesheets: " + scene.getStylesheets());
-        
+
         Parent root = scene.getRoot();
         printNode(root, 0);
     }
-    
+
     /**
      * Prints the node.
      *
@@ -40,23 +37,23 @@ public class AppTree {
         if (node instanceof Parent) {
             Parent parent = (Parent) node;
             System.out.println(getIndent(depth) + "Parent: " + parent);
-            
+
             for (javafx.scene.Node child : parent.getChildrenUnmodifiable()) {
                 printNode(child, depth + 1);
             }
         } else {
-        	if (node instanceof Text) {
-        	    Text textNode = (Text) node;
-        	    System.out.println(getIndent(depth) + "Text: \"" + textNode.getText() + "\"");
-        	}
-            
+            if (node instanceof Text) {
+                Text textNode = (Text) node;
+                System.out.println(getIndent(depth) + "Text: \"" + textNode.getText() + "\"");
+            }
+
             if (node instanceof Label) {
                 Label label = (Label) node;
                 System.out.println(getIndent(depth + 1) + "Text: " + label.getText());
             }
         }
     }
-    
+
     /**
      * Gets the indent.
      *

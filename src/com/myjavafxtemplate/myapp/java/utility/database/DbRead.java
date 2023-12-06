@@ -1,11 +1,7 @@
-/*
- * 
- */
 package com.myjavafxtemplate.myapp.java.utility.database;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -22,49 +18,49 @@ import oracle.jdbc.OracleTypes;
  * The Class DbRead.
  */
 public class DbRead {
-	
-	/** The conn. */
-	private static Connection conn;
 
-	/**
-	 * Instantiates a new db read.
-	 */
-	// Private constructor to prevent instantiation
-	private DbRead() {}
-	
-	
-	
-	public static List<List<Object>> read(String tableName, String sortBy) {
-		String sanitizedTableName = AppSecurity.sanitize(tableName);
-		String sanitizedSortBy = AppSecurity.sanitize(sortBy);
-		
-		conn = DbConnect.sharedConnection();
-		
-		String call = "{call GetTableData(?, ?, ?)}";
+    /** The conn. */
+    private static Connection conn;
+
+    /**
+     * Instantiates a new db read.
+     */
+    // Private constructor to prevent instantiation
+    private DbRead() {}
+
+
+
+    public static List<List<Object>> read(String tableName, String sortBy) {
+        String sanitizedTableName = AppSecurity.sanitize(tableName);
+        String sanitizedSortBy = AppSecurity.sanitize(sortBy);
+
+        conn = DbConnect.sharedConnection();
+
+        String call = "{call GetTableData(?, ?, ?)}";
 
         try (CallableStatement callableStatement = conn.prepareCall(call)) {
-        	
-        	callableStatement.setString(1, sanitizedTableName);
+
+            callableStatement.setString(1, sanitizedTableName);
             callableStatement.setString(2, sanitizedSortBy);
-            
+
             // Register the OUT parameter for the result set
             callableStatement.registerOutParameter(3, OracleTypes.CURSOR);
 
 
             // Execute the stored procedure
             callableStatement.execute();
-             
+
             // Get the result set from the OUT parameter
             ResultSet rs = (ResultSet) callableStatement.getObject(3);
 
             List<List<Object>> resultList = new ArrayList<>();
-            
+
             ResultSetMetaData metaData = rs.getMetaData();
             int columnCount = metaData.getColumnCount();
 
             while (rs.next()) {
-            	// creating row of client data
-            	List<Object> row = new ArrayList<>();
+                // creating row of client data
+                List<Object> row = new ArrayList<>();
                 for (int i = 1; i <= columnCount; i++) {
                     row.add(rs.getObject(i));
                 }

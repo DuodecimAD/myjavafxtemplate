@@ -44,15 +44,15 @@ public class AppController {
      */
     @FXML
     public void initialize() {
-    	LoggerUtil.getLogger().info("Initialize method called");
+        LoggerUtil.getLogger().info("Initialize method called");
 
-    	setMenu();
-    	
-    	/* to stop having a button focused while content is not connected to it */
-    	Platform.runLater(() -> {
-    		body.requestFocus();
-    	});
-    	
+        setMenu();
+
+        /* to stop having a button focused while content is not connected to it */
+        Platform.runLater(() -> {
+            body.requestFocus();
+        });
+
         LoggerUtil.getLogger().info("Initialize done");
     }
     
@@ -62,15 +62,14 @@ public class AppController {
      * Sets the menu.
      */
     private void setMenu() {
-    	setMenuContentButtons();
-    	setMenuSettingsButton();
+        setMenuContentButtons();
+        setMenuSettingsButton();
     }
     
     /**
      * Sets the menu content buttons.
      */
     private void setMenuContentButtons() {
-
 
         File directory = new File(AppSettings.INSTANCE.appFullPath+"content");
 
@@ -83,8 +82,8 @@ public class AppController {
                 Button button = new Button(file.getName().substring(0, file.getName().lastIndexOf(".")));
                 
                 button.setOnAction(event -> {
-                	loadContent(file.getName());
-                	updateActiveState(buttonsMenu, button);
+                    loadContent(file.getName());
+                    updateActiveState(buttonsMenu, button);
                 });
                 
                 buttonsMenu.add(button);
@@ -96,48 +95,49 @@ public class AppController {
             
 
         }else {
-        	System.out.println("File isn't working, so probably within a jar : ");
+            System.out.println("File isn't working, so probably within a jar : ");
 
-        	// change to app/ for install
-        	//try (JarFile jarFile = new JarFile("app/myjavafxtemplate.jar")) {
-        	try (JarFile jarFile = new JarFile("myjavafxtemplate.jar")) {
-        	    Enumeration<JarEntry> entries = jarFile.entries();
-        	    
-        	    long startTime = System.currentTimeMillis();
-        	    
-        	    while (entries.hasMoreElements()) {
-        	        JarEntry entry = entries.nextElement();
-        	        String path = entry.getName();
+            // change to app/ for install
+            //try (JarFile jarFile = new JarFile("app/myjavafxtemplate.jar")) {
+            try (JarFile jarFile = new JarFile("myjavafxtemplate.jar")) {
+                
+                Enumeration<JarEntry> entries = jarFile.entries();
 
-        	        if (path.startsWith(AppSettings.INSTANCE.contentPath) && path.endsWith(".fxml")) {
-        	            
-        	            String fileName = path.substring((AppSettings.INSTANCE.contentPath).length(), path.length() - (".fxml").length());
-        	            System.out.println(fileName);
-        	            Button button = new Button(fileName);
-                        
-        	            button.setOnAction(event -> {
-                        	loadContent(fileName + ".fxml");
-                        	updateActiveState(buttonsMenu, button);
+                long startTime = System.currentTimeMillis();
+
+                while (entries.hasMoreElements()) {
+                    JarEntry entry = entries.nextElement();
+                    String path = entry.getName();
+
+                    if (path.startsWith(AppSettings.INSTANCE.contentPath) && path.endsWith(".fxml")) {
+
+                        String fileName = path.substring((AppSettings.INSTANCE.contentPath).length(), path.length() - (".fxml").length());
+                        System.out.println(fileName);
+                        Button button = new Button(fileName);
+
+                        button.setOnAction(event -> {
+                            loadContent(fileName + ".fxml");
+                            updateActiveState(buttonsMenu, button);
                         });
                         
                         buttonsMenu.add(button);
 
-        	        }
-        	    }
-        	    long endTime = System.currentTimeMillis();
-        	    long totalTime = endTime - startTime;
+                    }
+                }
+                long endTime = System.currentTimeMillis();
+                long totalTime = endTime - startTime;
 
-        	    // print the total time to the console
-        	    System.out.println("Total time: " + totalTime + " milliseconds");
-        	    
-        	    VBox menuButtons = new VBox();
+                // print the total time to the console
+                System.out.println("Total time: " + totalTime + " milliseconds");
+
+                VBox menuButtons = new VBox();
                 menuButtons.setId("menuButtons");
                 menuButtons.getChildren().addAll(buttonsMenu);
                 menuPane.setCenter(menuButtons);
-        	} catch (Exception e) {
-        	    e.printStackTrace();
-        	}
-        	
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         }
     }
     
@@ -157,12 +157,12 @@ public class AppController {
      * Sets the menu settings button.
      */
     private void setMenuSettingsButton() {
-    	Button settingsButton = new Button();
+        Button settingsButton = new Button();
         settingsButton.setText("Settings");
         settingsButton.setId("settingsButton");
         settingsButton.setOnAction(event -> {
-        	loadContent("Settings.fxml");
-        	updateActiveState(buttonsMenu, settingsButton);
+            loadContent("Settings.fxml");
+            updateActiveState(buttonsMenu, settingsButton);
         });
         menuPane.setBottom(settingsButton);
         buttonsMenu.add(settingsButton);
@@ -184,14 +184,14 @@ public class AppController {
                 CachedFXML cachedFXML = fxmlCache.get(fxmlName);
                 body.setCenter(cachedFXML.getContent());
             } else {
-            	URL pathUrl;
-            	if(!fxmlName.equals("Settings.fxml")) {
-            		pathUrl = new URL(AppSettings.INSTANCE.appUrlPath +"content/" + fxmlName);
-            	}else {
-            		pathUrl = new URL(AppSettings.INSTANCE.appUrlPath + fxmlName);
-            	}
-            	   
-            	 FXMLLoader loader = new FXMLLoader(pathUrl);
+                URL pathUrl;
+                if(!fxmlName.equals("Settings.fxml")) {
+                    pathUrl = new URL(AppSettings.INSTANCE.appUrlPath +"content/" + fxmlName);
+                }else {
+                    pathUrl = new URL(AppSettings.INSTANCE.appUrlPath + fxmlName);
+                }
+
+                FXMLLoader loader = new FXMLLoader(pathUrl);
                  Node content = loader.load();
                  Object controller = loader.getController();
 
@@ -207,7 +207,9 @@ public class AppController {
      }
     
     public class CachedFXML {
+
         private final Node content;
+        
         private final Object controller;
 
         public CachedFXML(Node content, Object controller) {

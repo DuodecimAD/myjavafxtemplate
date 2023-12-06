@@ -1,6 +1,3 @@
-/*
- * 
- */
 package com.myjavafxtemplate.myapp.java.utility;
 
 import java.io.File;
@@ -16,9 +13,9 @@ import java.util.logging.SimpleFormatter;
  * The Class LoggerUtil.
  */
 public class LoggerUtil {
-	
-	/** The logger. */
-	private static Logger logger = Logger.getLogger(LoggerUtil.class.getName());;
+
+    /** The logger. */
+    private static Logger logger = Logger.getLogger(LoggerUtil.class.getName());
 
     /**
      * Gets the logger.
@@ -30,13 +27,13 @@ public class LoggerUtil {
         return logger;
     }
 
-	
+
     /**
      * Setup logging.
      */
     public static void setupLogging() {
-    	
-    	File logFolder = new File(System.getProperty("user.home") + "/documents/com.myjavafxtemplate.myapp/logs/");
+
+        File logFolder = new File(System.getProperty("user.home") + "/documents/com.myjavafxtemplate.myapp/logs/");
         if (!logFolder.exists()) {
             if (logFolder.mkdirs()) {
                 logger.info("Log folder created");
@@ -44,21 +41,21 @@ public class LoggerUtil {
                 logger.warning("Failed to create log folder");
             }
         }
-        
-    	
+
+
         try {
-        	// this remoive the console spam
-        	Logger globalLogger = Logger.getLogger("");
-        	Handler[] handlers = globalLogger.getHandlers();
+            // this remoive the console spam
+            Logger globalLogger = Logger.getLogger("");
+            Handler[] handlers = globalLogger.getHandlers();
             for (Handler handler : handlers) {
                 globalLogger.removeHandler(handler);
             }
-        	
+
             // Create a file handler
-        	// String fullPath = LoggerUtil.class.getClassLoader().getResource("com/myjavafxtemplate/myapp/").getPath().replaceFirst("^/(.:/)", "$1");
+            // String fullPath = LoggerUtil.class.getClassLoader().getResource("com/myjavafxtemplate/myapp/").getPath().replaceFirst("^/(.:/)", "$1");
             FileHandler fileHandler = new FileHandler(System.getProperty("user.home") + "/documents/com.myjavafxtemplate.myapp/logs/log%g.log", 50000, 20, true);
-            
-            
+
+
             fileHandler.setLevel(Level.ALL);
             fileHandler.setFormatter(new SimpleFormatter());
 
