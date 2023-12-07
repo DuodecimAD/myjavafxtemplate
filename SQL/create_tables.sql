@@ -206,6 +206,6 @@ CREATE OR REPLACE TRIGGER debug_log
   FOR EACH ROW 
 	WHEN (NEW.log_id IS NULL) 
 	BEGIN
-		elect Seq_debug_log.NEXTVAL INTO :NEW.log_id from DUAL; 
+		select Seq_debug_log.NEXTVAL INTO :NEW.log_id from DUAL; 
 	END;
 	/
